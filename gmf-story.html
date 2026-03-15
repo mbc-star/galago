@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GMF × Galago — From Paper to Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #F0EDE6;
+      --cream2:  #E8E4DC;
+      --cream3:  #D8D4CC;
+      --ink:     #0A150D;
+      --ink2:    #2A3D2E;
+      --ink3:    #5A6E5C;
+      --forest:  #12251A;
+      --deep:    #0D1A12;
+      --emerald: #1A9E4A;
+      --em2:     #2ECC71;
+      --red:     #C0392B;
+      --amber:   #D4831A;
+      --font-d:  'Syne', sans-serif;
+      --font-b:  'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(240,237,230,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--cream3);
+    }
+    .topbar-logo {
+      font-family: var(--font-d); font-size: 1rem; font-weight: 800;
+      color: var(--ink); text-decoration: none; letter-spacing: -0.02em;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .topbar-logo span { color: var(--emerald); }
+    .topbar-back {
+      font-size: 0.78rem; font-weight: 500; color: var(--ink3);
+      text-decoration: none; display: flex; align-items: center; gap: 4px;
+      transition: color 0.2s;
+    }
+    .topbar-back:hover { color: var(--ink); }
+
+    /* slide dots */
+    .slide-dots {
+      position: fixed; right: 2rem; top: 50%; transform: translateY(-50%);
+      z-index: 200; display: flex; flex-direction: column; gap: 10px;
+    }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--cream3); border: 1.5px solid var(--ink3);
+      cursor: pointer; transition: background 0.25s, transform 0.25s;
+    }
+    .dot.active { background: var(--emerald); border-color: var(--emerald); transform: scale(1.3); }
+
+    /* ── SLIDES ── */
+    .slide {
+      min-height: 100vh;
+      scroll-snap-align: start;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-inner { max-width: 1060px; width: 100%; margin: 0 auto; }
+
+    /* slide numbers */
+    .slide-num {
+      font-family: var(--font-d); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .slide-num::after { content: ''; flex: 1; max-width: 40px; height: 1px; }
+
+    /* ══════════════════════════════════════════
+       SLIDE 1 — INTRO / CONTEXT
+    ══════════════════════════════════════════ */
+    .s1 { background: var(--forest); }
+    .s1 .slide-num { color: var(--em2); }
+    .s1 .slide-num::after { background: var(--em2); opacity: 0.4; }
+
+    .s1-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+
+    .s1-kicker {
+      font-family: var(--font-d); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--em2);
+      margin-bottom: 1.2rem;
+    }
+
+    .s1-title {
+      font-family: var(--font-d); font-size: clamp(2rem, 4.5vw, 3.8rem); font-weight: 800;
+      color: var(--cream); line-height: 1.06; letter-spacing: -0.03em;
+      margin-bottom: 1.4rem;
+    }
+    .s1-title em { font-style: normal; color: var(--em2); }
+
+    .s1-body { font-size: 1rem; line-height: 1.8; color: rgba(240,237,230,0.65); margin-bottom: 2rem; }
+
+    .s1-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: rgba(46,204,113,0.1); border-radius: 10px; overflow: hidden;
+      border: 1px solid rgba(46,204,113,0.12);
+    }
+    .s1-stat { background: rgba(13,26,18,0.7); padding: 1.2rem 1rem; text-align: center; }
+    .s1-stat-n { font-family: var(--font-d); font-size: 1.8rem; font-weight: 800; color: var(--em2); letter-spacing: -0.02em; line-height: 1; }
+    .s1-stat-l { font-size: 0.68rem; color: rgba(200,217,200,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; }
+
+    /* GMF card visual */
+    .s1-visual { position: relative; }
+    .foundation-card {
+      background: rgba(240,237,230,0.04); border: 1px solid rgba(46,204,113,0.15);
+      border-radius: 14px; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .foundation-card::before {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 60%; height: 100%;
+      background: radial-gradient(ellipse at 100% 0%, rgba(46,204,113,0.06), transparent 70%);
+    }
+    .fc-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; }
+    .fc-logo-dot { width: 32px; height: 32px; border-radius: 8px; background: rgba(46,204,113,0.12); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .fc-logo-name { font-family: var(--font-d); font-size: 0.95rem; font-weight: 700; color: var(--cream); }
+    .fc-logo-sub { font-size: 0.65rem; color: var(--em2); letter-spacing: 0.1em; text-transform: uppercase; }
+    .fc-quote {
+      font-family: var(--font-d); font-style: italic; font-size: 0.92rem;
+      line-height: 1.65; color: rgba(240,237,230,0.7); margin-bottom: 1rem;
+    }
+    .fc-cite { font-size: 0.68rem; color: var(--em2); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+    .fc-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.4rem; }
+    .fc-tag { font-size: 0.65rem; font-weight: 500; padding: 0.2rem 0.65rem; border-radius: 100px; border: 1px solid rgba(46,204,113,0.2); color: var(--em2); }
+
+    /* ══════════════════════════════════════════
+       SLIDE 2 — THE BEFORE
+    ══════════════════════════════════════════ */
+    .s2 { background: var(--cream2); }
+    .s2 .slide-num { color: var(--red); }
+    .s2 .slide-num::after { background: var(--red); opacity: 0.3; }
+
+    .s2-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+
+    .s2-title { font-family: var(--font-d); font-size: clamp(1.8rem,4vw,3.2rem); font-weight: 800; color: var(--ink); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 1.2rem; }
+    .s2-title em { font-style: normal; color: var(--red); }
+    .s2-body { font-size: 0.95rem; line-height: 1.8; color: var(--ink2); margin-bottom: 2rem; }
+
+    .chaos-list { display: flex; flex-direction: column; gap: 0; }
+    .chaos-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.1rem 1.2rem;
+      background: var(--cream); border-left: 3px solid transparent;
+      margin-bottom: 2px; transition: border-color 0.2s;
+    }
+    .chaos-item:hover { border-left-color: var(--red); }
+    .chaos-icon { flex-shrink: 0; width: 28px; height: 28px; background: rgba(192,57,43,0.08); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; margin-top: 1px; }
+    .chaos-text h4 { font-family: var(--font-d); font-size: 0.88rem; font-weight: 700; color: var(--ink); margin-bottom: 0.2rem; }
+    .chaos-text p { font-size: 0.8rem; line-height: 1.6; color: var(--ink3); }
+
+    /* right col: visual chaos stacks */
+    .chaos-visual { display: flex; flex-direction: column; gap: 0.8rem; padding-top: 1rem; }
+
+    .file-stack {
+      background: var(--cream); border: 1.5px solid var(--cream3); border-radius: 10px;
+      padding: 1rem 1.2rem; position: relative; overflow: hidden;
+    }
+    .file-stack::before {
+      content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    }
+    .file-stack.red::before { background: var(--red); }
+    .file-stack.amber::before { background: var(--amber); }
+    .file-stack.gray::before { background: var(--cream3); }
+
+    .fs-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+    .fs-title { font-family: var(--font-d); font-size: 0.8rem; font-weight: 700; color: var(--ink); }
+    .fs-badge { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.55rem; border-radius: 100px; }
+    .fs-badge.danger { background: rgba(192,57,43,0.1); color: var(--red); }
+    .fs-badge.warn   { background: rgba(212,131,26,0.1); color: var(--amber); }
+    .fs-badge.neutral { background: rgba(10,21,13,0.06); color: var(--ink3); }
+
+    .fs-files { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .fs-file { font-size: 0.68rem; background: var(--cream2); border: 1px solid var(--cream3); padding: 0.18rem 0.5rem; border-radius: 4px; color: var(--ink3); font-family: monospace; }
+
+    .time-cost {
+      display: flex; align-items: center; gap: 0.6rem;
+      background: rgba(192,57,43,0.06); border: 1px solid rgba(192,57,43,0.15);
+      border-radius: 8px; padding: 0.9rem 1.1rem; margin-top: 0.5rem;
+    }
+    .tc-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .tc-label { font-size: 0.8rem; font-weight: 500; color: var(--ink2); }
+    .tc-value { font-family: var(--font-d); font-size: 1rem; font-weight: 800; color: var(--red); margin-left: auto; }
+
+    /* ══════════════════════════════════════════
+       SLIDE 3 — THE AFTER
+    ══════════════════════════════════════════ */
+    .s3 { background: var(--cream); }
+    .s3 .slide-num { color: var(--emerald); }
+    .s3 .slide-num::after { background: var(--emerald); opacity: 0.4; }
+
+    .s3-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+
+    .s3-title { font-family: var(--font-d); font-size: clamp(1.8rem,4vw,3.2rem); font-weight: 800; color: var(--ink); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 1.2rem; }
+    .s3-title em { font-style: normal; color: var(--emerald); }
+    .s3-body { font-size: 0.95rem; line-height: 1.8; color: var(--ink2); margin-bottom: 2rem; }
+
+    /* platform mockup cards */
+    .platform-cards { display: flex; flex-direction: column; gap: 0.7rem; }
+
+    .pcard {
+      background: var(--cream2); border: 1.5px solid var(--cream3);
+      border-radius: 10px; padding: 1rem 1.2rem;
+      display: flex; align-items: flex-start; gap: 0.9rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .pcard:hover { border-color: var(--emerald); box-shadow: 0 4px 16px rgba(26,158,74,0.08); }
+    .pcard-icon { flex-shrink: 0; width: 30px; height: 30px; background: rgba(26,158,74,0.1); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; }
+    .pcard-content h4 { font-family: var(--font-d); font-size: 0.85rem; font-weight: 700; color: var(--ink); margin-bottom: 0.15rem; }
+    .pcard-content p { font-size: 0.77rem; line-height: 1.55; color: var(--ink3); }
+    .pcard-pill { display: inline-block; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(26,158,74,0.1); color: var(--emerald); padding: 0.14rem 0.5rem; border-radius: 100px; margin-top: 0.3rem; }
+
+    /* right: before/after comparison strips */
+    .ba-strips { display: flex; flex-direction: column; gap: 1rem; padding-top: 0.5rem; }
+
+    .ba-strip {
+      background: var(--cream); border: 1.5px solid var(--cream3); border-radius: 10px; overflow: hidden;
+    }
+    .ba-strip-header {
+      padding: 0.7rem 1rem; background: var(--cream2);
+      font-family: var(--font-d); font-size: 0.78rem; font-weight: 700; color: var(--ink);
+      border-bottom: 1px solid var(--cream3);
+    }
+    .ba-strip-rows { padding: 0.8rem 1rem; display: flex; flex-direction: column; gap: 0.55rem; }
+    .ba-strip-row { display: flex; align-items: center; gap: 0.7rem; }
+    .ba-strip-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; width: 40px; flex-shrink: 0; }
+    .ba-strip-label.b { color: var(--ink3); }
+    .ba-strip-label.a { color: var(--emerald); }
+    .ba-strip-track { flex: 1; height: 5px; background: var(--cream3); border-radius: 100px; overflow: hidden; }
+    .ba-strip-fill { height: 100%; border-radius: 100px; width: 0; transition: width 1.5s cubic-bezier(0.16,1,0.3,1); }
+    .ba-strip-fill.b { background: rgba(10,21,13,0.15); }
+    .ba-strip-fill.a { background: var(--emerald); }
+    .ba-strip-val { font-size: 0.68rem; font-weight: 600; color: var(--ink3); width: 70px; text-align: right; flex-shrink: 0; }
+    .ba-strip-val.highlight { color: var(--emerald); }
+
+    /* ══════════════════════════════════════════
+       SLIDE 4 — IMPACT + CTA
+    ══════════════════════════════════════════ */
+    .s4 { background: var(--forest); }
+    .s4 .slide-num { color: var(--em2); }
+    .s4 .slide-num::after { background: var(--em2); opacity: 0.4; }
+
+    .s4-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+
+    .s4-title { font-family: var(--font-d); font-size: clamp(1.8rem,4vw,3.4rem); font-weight: 800; color: var(--cream); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 1.2rem; }
+    .s4-title em { font-style: normal; color: var(--em2); }
+    .s4-body { font-size: 0.95rem; line-height: 1.8; color: rgba(240,237,230,0.65); margin-bottom: 2rem; }
+
+    .outcome-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .outcome-item { display: flex; align-items: flex-start; gap: 0.9rem; }
+    .outcome-dot { flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--em2); margin-top: 6px; }
+    .outcome-text { font-size: 0.88rem; line-height: 1.65; color: rgba(240,237,230,0.7); }
+    .outcome-text strong { color: var(--cream); font-weight: 600; }
+
+    /* impact metrics grid */
+    .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(46,204,113,0.1); border-radius: 14px; overflow: hidden; border: 1px solid rgba(46,204,113,0.15); }
+    .ig-cell { background: rgba(13,26,18,0.7); padding: 1.5rem 1.3rem; }
+    .ig-num { font-family: var(--font-d); font-size: 2.4rem; font-weight: 800; color: var(--em2); letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.3rem; }
+    .ig-label { font-size: 0.72rem; color: rgba(200,217,200,0.55); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; line-height: 1.4; }
+
+    /* CTA row */
+    .s4-cta-row {
+      grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center;
+      text-align: center; gap: 1.2rem; padding-top: 1rem;
+      border-top: 1px solid rgba(46,204,113,0.12); margin-top: 1rem;
+    }
+    .s4-cta-text { font-size: 0.9rem; color: rgba(240,237,230,0.6); }
+    .s4-btn-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn-em {
+      background: var(--em2); color: var(--forest); padding: 0.8rem 2rem;
+      border-radius: 100px; font-size: 0.88rem; font-weight: 700; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-em:hover { background: #A8FF78; transform: translateY(-2px); }
+    .btn-outline {
+      color: rgba(240,237,230,0.75); padding: 0.8rem 2rem; border-radius: 100px;
+      font-size: 0.88rem; font-weight: 500; text-decoration: none;
+      border: 1px solid rgba(240,237,230,0.2); transition: border-color 0.2s;
+    }
+    .btn-outline:hover { border-color: rgba(240,237,230,0.5); color: var(--cream); }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 3px;
+      background: var(--cream3); z-index: 200;
+    }
+    .progress-fill { height: 100%; background: var(--emerald); transition: width 0.4s ease; width: 25%; }
+
+    /* ── NEXT ARROW ── */
+    .next-arrow {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      cursor: pointer; opacity: 0.45; transition: opacity 0.2s;
+      font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: inherit;
+    }
+    .next-arrow:hover { opacity: 0.8; }
+    .next-arrow svg { animation: bounce 2s ease-in-out infinite; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(4px)} }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      .s1-layout, .s2-layout, .s3-layout, .s4-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .impact-grid { grid-template-columns: 1fr 1fr; }
+      .slide-dots { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <a href="index.html" class="topbar-logo">
+    Galago <span>·</span> GMF Case Study
+  </a>
+  <a href="index.html" class="topbar-back">
+    ← Back to site
+  </a>
+</nav>
+
+<!-- SLIDE DOTS -->
+<div class="slide-dots" id="dots">
+  <div class="dot active" onclick="goTo(0)"></div>
+  <div class="dot" onclick="goTo(1)"></div>
+  <div class="dot" onclick="goTo(2)"></div>
+  <div class="dot" onclick="goTo(3)"></div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 1 — CONTEXT
+══════════════════════════════════════════ -->
+<section class="slide s1" id="slide-0">
+  <div class="slide-inner">
+    <div class="s1-layout">
+      <div>
+        <div class="slide-num">01 / 04</div>
+        <div class="s1-kicker">The Foundation</div>
+        <h1 class="s1-title">A decade of impact.<br><em>Built on paper.</em></h1>
+        <p class="s1-body">The Gakundi Memorial Foundation has been identifying Kenya's most talented children from its most vulnerable communities since 2012 — and funding their path through secondary school and beyond. 123 students. 47 schools. 8 counties. The mission was extraordinary. The tools were not.</p>
+        <div class="s1-stats">
+          <div class="s1-stat"><div class="s1-stat-n">123</div><div class="s1-stat-l">Active students</div></div>
+          <div class="s1-stat"><div class="s1-stat-n">12+</div><div class="s1-stat-l">Years operating</div></div>
+          <div class="s1-stat"><div class="s1-stat-n">4.25×</div><div class="s1-stat-l">National avg grades</div></div>
+        </div>
+      </div>
+      <div class="s1-visual">
+        <div class="foundation-card">
+          <div class="fc-logo-row">
+            <div class="fc-logo-dot">🇰🇪</div>
+            <div>
+              <div class="fc-logo-name">Gakundi Memorial Foundation</div>
+              <div class="fc-logo-sub">Educate · End Poverty</div>
+            </div>
+          </div>
+          <p class="fc-quote">"I want to raise my parents' background and help children who can't afford school."</p>
+          <div class="fc-cite">— Felistar Waithera, GMF student · KCPE 317 · Ranked 3rd in her class</div>
+          <div class="fc-tags">
+            <span class="fc-tag">Scholarship foundation</span>
+            <span class="fc-tag">Kenya · 8 counties</span>
+            <span class="fc-tag">63% girls</span>
+            <span class="fc-tag">100% fee coverage</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="next-arrow" onclick="goTo(1)" style="color:rgba(240,237,230,0.5)">
+    Next
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 2 — THE BEFORE
+══════════════════════════════════════════ -->
+<section class="slide s2" id="slide-1">
+  <div class="slide-inner">
+    <div class="s2-layout">
+      <div>
+        <div class="slide-num" style="color:var(--red)">02 / 04</div>
+        <h2 class="s2-title">The <em>before</em>:<br>fragile by design</h2>
+        <p class="s2-body">For most of GMF's history, managing 123 students across 47 schools meant one thing: an overwhelming amount of manual work. Every hour spent on administration was an hour not spent on a student.</p>
+        <div class="chaos-list">
+          <div class="chaos-item">
+            <div class="chaos-icon">🗂️</div>
+            <div class="chaos-text"><h4>Files scattered across drives</h4><p>Student dossiers as PDFs across local hard drives and shared folders — no naming convention, no search, no version control.</p></div>
+          </div>
+          <div class="chaos-item">
+            <div class="chaos-icon">📊</div>
+            <div class="chaos-text"><h4>Academic results in Excel</h4><p>Manually updated spreadsheets, prone to error, impossible to query across cohorts or years.</p></div>
+          </div>
+          <div class="chaos-item">
+            <div class="chaos-icon">📧</div>
+            <div class="chaos-text"><h4>Donor reports rebuilt every time</h4><p>Copy-pasting data, hunting for photos, rebuilding context from scratch for every sponsor update.</p></div>
+          </div>
+          <div class="chaos-item">
+            <div class="chaos-icon">🔎</div>
+            <div class="chaos-text"><h4>No early warning system</h4><p>A student missing school due to unpaid fees — like Simon Ngunjiri — could go unnoticed until it was too late to help.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="chaos-visual">
+          <div class="file-stack red">
+            <div class="fs-header">
+              <div class="fs-title">Student dossiers · 2024</div>
+              <span class="fs-badge danger">No structure</span>
+            </div>
+            <div class="fs-files">
+              <span class="fs-file">felistar_01_scan.pdf</span>
+              <span class="fs-file">lewis_results_final.pdf</span>
+              <span class="fs-file">IMG_20240312.jpg</span>
+              <span class="fs-file">valentine_COPY.xlsx</span>
+              <span class="fs-file">report_card_NEW.pdf</span>
+              <span class="fs-file">notes_march.docx</span>
+              <span class="fs-file">form3_results_v2_FINAL.xlsx</span>
+            </div>
+          </div>
+
+          <div class="file-stack amber">
+            <div class="fs-header">
+              <div class="fs-title">Academic tracking · Term 3</div>
+              <span class="fs-badge warn">Manual Excel</span>
+            </div>
+            <div class="fs-files">
+              <span class="fs-file">cohort_2024_v3.xlsx</span>
+              <span class="fs-file">cohort_2024_v3_FINAL.xlsx</span>
+              <span class="fs-file">cohort_2024_MARC.xlsx</span>
+              <span class="fs-file">cohort_backup_old.xlsx</span>
+            </div>
+          </div>
+
+          <div class="file-stack gray">
+            <div class="fs-header">
+              <div class="fs-title">Donor report · Cargill sponsor</div>
+              <span class="fs-badge neutral">Built from scratch</span>
+            </div>
+            <div class="fs-files">
+              <span class="fs-file">sponsor_update_draft.pptx</span>
+              <span class="fs-file">photos_selected/</span>
+              <span class="fs-file">data_copied_from_excel.txt</span>
+            </div>
+          </div>
+
+          <div class="time-cost">
+            <div class="tc-icon">⏱</div>
+            <div class="tc-label">Time to prepare one sponsor report</div>
+            <div class="tc-value">Half a day</div>
+          </div>
+          <div class="time-cost" style="background:rgba(212,131,26,0.06);border-color:rgba(212,131,26,0.15);">
+            <div class="tc-icon">😰</div>
+            <div class="tc-label">Students flagged at risk before crisis</div>
+            <div class="tc-value" style="color:var(--amber)">Almost none</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="next-arrow" onclick="goTo(2)">
+    Next
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 3 — THE AFTER
+══════════════════════════════════════════ -->
+<section class="slide s3" id="slide-2">
+  <div class="slide-inner">
+    <div class="s3-layout">
+      <div>
+        <div class="slide-num">03 / 04</div>
+        <h2 class="s3-title">The <em>after</em>:<br>a living platform</h2>
+        <p class="s3-body">Galago built a purpose-designed web application around GMF's actual rhythms — from initial student selection through four years of secondary school and beyond. Every feature replaced a specific manual process.</p>
+        <div class="platform-cards">
+          <div class="pcard">
+            <div class="pcard-icon">📊</div>
+            <div class="pcard-content">
+              <h4>Live Impact Dashboard</h4>
+              <p>All 123 students, grade distribution, gender breakdown, school coverage — recalculated in real time. Always current.</p>
+              <span class="pcard-pill">Replaces: weekly check-in emails</span>
+            </div>
+          </div>
+          <div class="pcard">
+            <div class="pcard-icon">🎓</div>
+            <div class="pcard-content">
+              <h4>Student Profiles & Digital Dossiers</h4>
+              <p>Every student's full history in one click — family background, primary results, every report card, photos, mentor notes.</p>
+              <span class="pcard-pill">Replaces: scattered PDFs & drives</span>
+            </div>
+          </div>
+          <div class="pcard">
+            <div class="pcard-icon">🤖</div>
+            <div class="pcard-content">
+              <h4>AI Performance Analysis</h4>
+              <p>The platform reads academic data and flags students who may be struggling before it becomes a crisis.</p>
+              <span class="pcard-pill">Replaces: reactive spreadsheet review</span>
+            </div>
+          </div>
+          <div class="pcard">
+            <div class="pcard-icon">🔗</div>
+            <div class="pcard-content">
+              <h4>Living Partnership Deck</h4>
+              <p>A full-screen presentation that pulls from live data. Share a link — real students, real results, always up to date.</p>
+              <span class="pcard-pill">Replaces: rebuilt PowerPoints</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="ba-strips" id="ba-strips">
+          <div class="ba-strip">
+            <div class="ba-strip-header">⏱ Preparing a sponsor report</div>
+            <div class="ba-strip-rows">
+              <div class="ba-strip-row"><span class="ba-strip-label b">Before</span><div class="ba-strip-track"><div class="ba-strip-fill b" data-w="92"></div></div><span class="ba-strip-val">Half a day</span></div>
+              <div class="ba-strip-row"><span class="ba-strip-label a">After</span><div class="ba-strip-track"><div class="ba-strip-fill a" data-w="6"></div></div><span class="ba-strip-val highlight">5 minutes</span></div>
+            </div>
+          </div>
+          <div class="ba-strip">
+            <div class="ba-strip-header">🔍 Finding a student's full history</div>
+            <div class="ba-strip-rows">
+              <div class="ba-strip-row"><span class="ba-strip-label b">Before</span><div class="ba-strip-track"><div class="ba-strip-fill b" data-w="80"></div></div><span class="ba-strip-val">Folder search</span></div>
+              <div class="ba-strip-row"><span class="ba-strip-label a">After</span><div class="ba-strip-track"><div class="ba-strip-fill a" data-w="3"></div></div><span class="ba-strip-val highlight">One click</span></div>
+            </div>
+          </div>
+          <div class="ba-strip">
+            <div class="ba-strip-header">📈 Programme performance overview</div>
+            <div class="ba-strip-rows">
+              <div class="ba-strip-row"><span class="ba-strip-label b">Before</span><div class="ba-strip-track"><div class="ba-strip-fill b" data-w="85"></div></div><span class="ba-strip-val">Manual Excel</span></div>
+              <div class="ba-strip-row"><span class="ba-strip-label a">After</span><div class="ba-strip-track"><div class="ba-strip-fill a" data-w="5"></div></div><span class="ba-strip-val highlight">Always live</span></div>
+            </div>
+          </div>
+          <div class="ba-strip">
+            <div class="ba-strip-header">🚨 Identifying a student at risk</div>
+            <div class="ba-strip-rows">
+              <div class="ba-strip-row"><span class="ba-strip-label b">Before</span><div class="ba-strip-track"><div class="ba-strip-fill b" data-w="100"></div></div><span class="ba-strip-val">Too late</span></div>
+              <div class="ba-strip-row"><span class="ba-strip-label a">After</span><div class="ba-strip-track"><div class="ba-strip-fill a" data-w="16"></div></div><span class="ba-strip-val highlight">AI flag, early</span></div>
+            </div>
+          </div>
+          <div class="ba-strip">
+            <div class="ba-strip-header">🤝 Sharing impact with a new sponsor</div>
+            <div class="ba-strip-rows">
+              <div class="ba-strip-row"><span class="ba-strip-label b">Before</span><div class="ba-strip-track"><div class="ba-strip-fill b" data-w="88"></div></div><span class="ba-strip-val">Days of work</span></div>
+              <div class="ba-strip-row"><span class="ba-strip-label a">After</span><div class="ba-strip-track"><div class="ba-strip-fill a" data-w="4"></div></div><span class="ba-strip-val highlight">Share a link</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="next-arrow" onclick="goTo(3)">
+    Next
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 4 — IMPACT + CTA
+══════════════════════════════════════════ -->
+<section class="slide s4" id="slide-3">
+  <div class="slide-inner">
+    <div class="s4-layout">
+      <div>
+        <div class="slide-num">04 / 04</div>
+        <h2 class="s4-title">The result:<br><em>time back for<br>what matters</em></h2>
+        <p class="s4-body">Technology at its best is invisible. It quietly handles the work that doesn't need human attention, so that human attention can go where it's irreplaceable.</p>
+        <div class="outcome-list">
+          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>Hours recovered</strong> from administration flow back into visiting students, mentoring candidates, and building sponsor relationships.</div></div>
+          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>Patterns invisible on paper</strong> — which schools perform best, which students need support — are now immediately visible and actionable.</div></div>
+          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>A professional, living presence</strong> for donors — one that shows real students with real stories and real results, always current.</div></div>
+          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>The same platform</strong> can be deployed for other scholarship foundations — shared infrastructure, shared improvement, more students served.</div></div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:1.5rem;">
+        <div class="impact-grid">
+          <div class="ig-cell"><div class="ig-num">–95%</div><div class="ig-label">Time to prepare a sponsor report</div></div>
+          <div class="ig-cell"><div class="ig-num">1 click</div><div class="ig-label">To access any student's full history</div></div>
+          <div class="ig-cell"><div class="ig-num">Early</div><div class="ig-label">AI flags students at risk before crisis</div></div>
+          <div class="ig-cell"><div class="ig-num">Always</div><div class="ig-label">Live dashboard — no manual refresh needed</div></div>
+        </div>
+
+        <div style="background:rgba(46,204,113,0.06);border:1px solid rgba(46,204,113,0.12);border-radius:10px;padding:1.3rem;">
+          <p style="font-family:var(--font-d);font-style:italic;font-size:0.9rem;line-height:1.65;color:rgba(240,237,230,0.75);margin-bottom:0.7rem;">"GMF didn't just pay my fees — they changed the way I see myself."</p>
+          <div style="font-size:0.68rem;color:var(--em2);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">— GMF student, Form 4 graduate 2024</div>
+        </div>
+      </div>
+
+      <div class="s4-cta-row">
+        <p class="s4-cta-text">Your foundation has the same potential. The platform is ready.</p>
+        <div class="s4-btn-row">
+          <a href="index.html#contact" class="btn-em">Talk to Galago →</a>
+          <a href="index.html" class="btn-outline">Back to site</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dots   = document.querySelectorAll('.dot');
+  const prog   = document.getElementById('progress');
+  let current  = 0;
+
+  function goTo(i) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    slides[i].scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // update dots + progress on scroll
+  const slideObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const idx = Array.from(slides).indexOf(e.target);
+      current = idx;
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      prog.style.width = ((idx + 1) / slides.length * 100) + '%';
+
+      // animate bars when slide 3 appears
+      if (idx === 2) animateBars();
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(s => slideObs.observe(s));
+
+  // keyboard nav
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  goTo(current - 1);
+  });
+
+  // bar animations
+  let barsAnimated = false;
+  function animateBars() {
+    if (barsAnimated) return;
+    barsAnimated = true;
+    document.querySelectorAll('.ba-strip-fill[data-w]').forEach((bar, i) => {
+      setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 100 + i * 55);
+    });
+  }
+</script>
+</body>
+</html>
