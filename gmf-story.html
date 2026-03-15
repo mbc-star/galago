@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GMF × Galago — From Paper to Platform</title>
+  <title>GMF × Galago From Paper to Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -23,7 +23,7 @@
       --em2:     #2ECC71;
       --red:     #C0392B;
       --amber:   #D4831A;
-      --font-d:  'Syne', sans-serif;
+      --font-d:  'Outfit', sans-serif;
       --font-b:  'Inter', sans-serif;
     }
 
@@ -91,7 +91,7 @@
     .slide-num::after { content: ''; flex: 1; max-width: 40px; height: 1px; }
 
     /* ══════════════════════════════════════════
-       SLIDE 1 — INTRO / CONTEXT
+       SLIDE 1 INTRO / CONTEXT
     ══════════════════════════════════════════ */
     .s1 { background: var(--forest); }
     .s1 .slide-num { color: var(--em2); }
@@ -147,7 +147,7 @@
     .fc-tag { font-size: 0.65rem; font-weight: 500; padding: 0.2rem 0.65rem; border-radius: 100px; border: 1px solid rgba(46,204,113,0.2); color: var(--em2); }
 
     /* ══════════════════════════════════════════
-       SLIDE 2 — THE BEFORE
+       SLIDE 2 THE BEFORE
     ══════════════════════════════════════════ */
     .s2 { background: var(--cream2); }
     .s2 .slide-num { color: var(--red); }
@@ -205,7 +205,7 @@
     .tc-value { font-family: var(--font-d); font-size: 1rem; font-weight: 800; color: var(--red); margin-left: auto; }
 
     /* ══════════════════════════════════════════
-       SLIDE 3 — THE AFTER
+       SLIDE 3 THE AFTER
     ══════════════════════════════════════════ */
     .s3 { background: var(--cream); }
     .s3 .slide-num { color: var(--emerald); }
@@ -232,31 +232,22 @@
     .pcard-content p { font-size: 0.77rem; line-height: 1.55; color: var(--ink3); }
     .pcard-pill { display: inline-block; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(26,158,74,0.1); color: var(--emerald); padding: 0.14rem 0.5rem; border-radius: 100px; margin-top: 0.3rem; }
 
-    /* right: before/after comparison strips */
-    .ba-strips { display: flex; flex-direction: column; gap: 1rem; padding-top: 0.5rem; }
-
-    .ba-strip {
-      background: var(--cream); border: 1.5px solid var(--cream3); border-radius: 10px; overflow: hidden;
-    }
-    .ba-strip-header {
-      padding: 0.7rem 1rem; background: var(--cream2);
-      font-family: var(--font-d); font-size: 0.78rem; font-weight: 700; color: var(--ink);
-      border-bottom: 1px solid var(--cream3);
-    }
-    .ba-strip-rows { padding: 0.8rem 1rem; display: flex; flex-direction: column; gap: 0.55rem; }
-    .ba-strip-row { display: flex; align-items: center; gap: 0.7rem; }
-    .ba-strip-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; width: 40px; flex-shrink: 0; }
-    .ba-strip-label.b { color: var(--ink3); }
-    .ba-strip-label.a { color: var(--emerald); }
-    .ba-strip-track { flex: 1; height: 5px; background: var(--cream3); border-radius: 100px; overflow: hidden; }
-    .ba-strip-fill { height: 100%; border-radius: 100px; width: 0; transition: width 1.5s cubic-bezier(0.16,1,0.3,1); }
-    .ba-strip-fill.b { background: rgba(10,21,13,0.15); }
-    .ba-strip-fill.a { background: var(--emerald); }
-    .ba-strip-val { font-size: 0.68rem; font-weight: 600; color: var(--ink3); width: 70px; text-align: right; flex-shrink: 0; }
-    .ba-strip-val.highlight { color: var(--emerald); }
+    /* right: before/after cards */
+    .ba-cards { display: flex; flex-direction: column; gap: 8px; padding-top: 0.5rem; }
+    .ba-card { display: grid; grid-template-columns: 1fr 28px 1fr; background: rgba(240,237,230,0.06); border: 1px solid rgba(46,204,113,0.12); border-radius: 12px; overflow: hidden; }
+    .ba-task-label { grid-column: 1 / -1; font-family: var(--font-d); font-size: 0.74rem; font-weight: 500; color: rgba(200,217,200,0.55); padding: 10px 14px 0; }
+    .ba-side { padding: 6px 14px 12px; }
+    .ba-side-label { font-family: var(--font-d); font-size: 0.57rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 2px; }
+    .ba-side.b .ba-side-label { color: rgba(200,217,200,0.35); }
+    .ba-side.a .ba-side-label { color: var(--em2); }
+    .ba-side-value { font-family: var(--font-d); font-size: 1.1rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+    .ba-side.b .ba-side-value { color: rgba(240,237,230,0.5); }
+    .ba-side.a .ba-side-value { color: var(--em2); }
+    .ba-arrow-col { display: flex; align-items: center; justify-content: center; color: rgba(46,204,113,0.2); padding-top: 6px; }
+    .ba-arrow-col svg { width: 14px; height: 14px; }
 
     /* ══════════════════════════════════════════
-       SLIDE 4 — IMPACT + CTA
+       SLIDE 4 IMPACT + CTA
     ══════════════════════════════════════════ */
     .s4 { background: var(--forest); }
     .s4 .slide-num { color: var(--em2); }
@@ -351,7 +342,7 @@
 <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
 
 <!-- ══════════════════════════════════════════
-     SLIDE 1 — CONTEXT
+     SLIDE 1 CONTEXT
 ══════════════════════════════════════════ -->
 <section class="slide s1" id="slide-0">
   <div class="slide-inner">
@@ -360,7 +351,7 @@
         <div class="slide-num">01 / 04</div>
         <div class="s1-kicker">The Foundation</div>
         <h1 class="s1-title">A decade of impact.<br><em>Built on paper.</em></h1>
-        <p class="s1-body">The Gakundi Memorial Foundation has been identifying Kenya's most talented children from its most vulnerable communities since 2012 — and funding their path through secondary school and beyond. 123 students. 47 schools. 8 counties. The mission was extraordinary. The tools were not.</p>
+        <p class="s1-body">The Gakundi Memorial Foundation has been identifying Kenya's most talented children from its most vulnerable communities since 2012 and funding their path through secondary school and beyond. 123 students. 47 schools. 8 counties. The mission was extraordinary. The tools were not.</p>
         <div class="s1-stats">
           <div class="s1-stat"><div class="s1-stat-n">123</div><div class="s1-stat-l">Active students</div></div>
           <div class="s1-stat"><div class="s1-stat-n">12+</div><div class="s1-stat-l">Years operating</div></div>
@@ -377,7 +368,7 @@
             </div>
           </div>
           <p class="fc-quote">"I want to raise my parents' background and help children who can't afford school."</p>
-          <div class="fc-cite">— Felistar Waithera, GMF student · KCPE 317 · Ranked 3rd in her class</div>
+          <div class="fc-cite">Felistar Waithera, GMF student · KCPE 317 · Ranked 3rd in her class</div>
           <div class="fc-tags">
             <span class="fc-tag">Scholarship foundation</span>
             <span class="fc-tag">Kenya · 8 counties</span>
@@ -395,7 +386,7 @@
 </section>
 
 <!-- ══════════════════════════════════════════
-     SLIDE 2 — THE BEFORE
+     SLIDE 2 THE BEFORE
 ══════════════════════════════════════════ -->
 <section class="slide s2" id="slide-1">
   <div class="slide-inner">
@@ -407,7 +398,7 @@
         <div class="chaos-list">
           <div class="chaos-item">
             <div class="chaos-icon">🗂️</div>
-            <div class="chaos-text"><h4>Files scattered across drives</h4><p>Student dossiers as PDFs across local hard drives and shared folders — no naming convention, no search, no version control.</p></div>
+            <div class="chaos-text"><h4>Files scattered across drives</h4><p>Student dossiers as PDFs across local hard drives and shared folders no naming convention, no search, no version control.</p></div>
           </div>
           <div class="chaos-item">
             <div class="chaos-icon">📊</div>
@@ -419,7 +410,7 @@
           </div>
           <div class="chaos-item">
             <div class="chaos-icon">🔎</div>
-            <div class="chaos-text"><h4>No early warning system</h4><p>A student missing school due to unpaid fees — like Simon Ngunjiri — could go unnoticed until it was too late to help.</p></div>
+            <div class="chaos-text"><h4>No early warning system</h4><p>A student missing school due to unpaid fees, like Simon Ngunjiri, could go unnoticed until it was too late to help.</p></div>
           </div>
         </div>
       </div>
@@ -488,7 +479,7 @@
 </section>
 
 <!-- ══════════════════════════════════════════
-     SLIDE 3 — THE AFTER
+     SLIDE 3 THE AFTER
 ══════════════════════════════════════════ -->
 <section class="slide s3" id="slide-2">
   <div class="slide-inner">
@@ -496,13 +487,13 @@
       <div>
         <div class="slide-num">03 / 04</div>
         <h2 class="s3-title">The <em>after</em>:<br>a living platform</h2>
-        <p class="s3-body">Galago built a purpose-designed web application around GMF's actual rhythms — from initial student selection through four years of secondary school and beyond. Every feature replaced a specific manual process.</p>
+        <p class="s3-body">Galago built a purpose-designed web application around GMF's actual rhythms: from initial student selection through four years of secondary school and beyond. Every feature replaced a specific manual process.</p>
         <div class="platform-cards">
           <div class="pcard">
             <div class="pcard-icon">📊</div>
             <div class="pcard-content">
               <h4>Live Impact Dashboard</h4>
-              <p>All 123 students, grade distribution, gender breakdown, school coverage — recalculated in real time. Always current.</p>
+              <p>All 123 students, grade distribution, gender breakdown, school coverage: recalculated in real time. Always current.</p>
               <span class="pcard-pill">Replaces: weekly check-in emails</span>
             </div>
           </div>
@@ -510,7 +501,7 @@
             <div class="pcard-icon">🎓</div>
             <div class="pcard-content">
               <h4>Student Profiles & Digital Dossiers</h4>
-              <p>Every student's full history in one click — family background, primary results, every report card, photos, mentor notes.</p>
+              <p>Every student's full history in one click: family background, primary results, every report card, photos, mentor notes.</p>
               <span class="pcard-pill">Replaces: scattered PDFs & drives</span>
             </div>
           </div>
@@ -526,7 +517,7 @@
             <div class="pcard-icon">🔗</div>
             <div class="pcard-content">
               <h4>Living Partnership Deck</h4>
-              <p>A full-screen presentation that pulls from live data. Share a link — real students, real results, always up to date.</p>
+              <p>A full-screen presentation that pulls from live data. Share a link: real students, real results, always up to date.</p>
               <span class="pcard-pill">Replaces: rebuilt PowerPoints</span>
             </div>
           </div>
@@ -534,42 +525,43 @@
       </div>
 
       <div>
-        <div class="ba-strips" id="ba-strips">
-          <div class="ba-strip">
-            <div class="ba-strip-header">⏱ Preparing a sponsor report</div>
-            <div class="ba-strip-rows">
-              <div class="ba-strip-row"><span class="ba-strip-label b">Before</span><div class="ba-strip-track"><div class="ba-strip-fill b" data-w="92"></div></div><span class="ba-strip-val">Half a day</span></div>
-              <div class="ba-strip-row"><span class="ba-strip-label a">After</span><div class="ba-strip-track"><div class="ba-strip-fill a" data-w="6"></div></div><span class="ba-strip-val highlight">5 minutes</span></div>
-            </div>
+        <div class="ba-cards">
+
+          <div class="ba-card">
+            <div class="ba-task-label">Preparing a sponsor report</div>
+            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">½ day</div></div>
+            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">5 min</div></div>
           </div>
-          <div class="ba-strip">
-            <div class="ba-strip-header">🔍 Finding a student's full history</div>
-            <div class="ba-strip-rows">
-              <div class="ba-strip-row"><span class="ba-strip-label b">Before</span><div class="ba-strip-track"><div class="ba-strip-fill b" data-w="80"></div></div><span class="ba-strip-val">Folder search</span></div>
-              <div class="ba-strip-row"><span class="ba-strip-label a">After</span><div class="ba-strip-track"><div class="ba-strip-fill a" data-w="3"></div></div><span class="ba-strip-val highlight">One click</span></div>
-            </div>
+
+          <div class="ba-card">
+            <div class="ba-task-label">Finding a student's full history</div>
+            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Folder search</div></div>
+            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">1 click</div></div>
           </div>
-          <div class="ba-strip">
-            <div class="ba-strip-header">📈 Programme performance overview</div>
-            <div class="ba-strip-rows">
-              <div class="ba-strip-row"><span class="ba-strip-label b">Before</span><div class="ba-strip-track"><div class="ba-strip-fill b" data-w="85"></div></div><span class="ba-strip-val">Manual Excel</span></div>
-              <div class="ba-strip-row"><span class="ba-strip-label a">After</span><div class="ba-strip-track"><div class="ba-strip-fill a" data-w="5"></div></div><span class="ba-strip-val highlight">Always live</span></div>
-            </div>
+
+          <div class="ba-card">
+            <div class="ba-task-label">Programme performance overview</div>
+            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Manual Excel</div></div>
+            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">Always live</div></div>
           </div>
-          <div class="ba-strip">
-            <div class="ba-strip-header">🚨 Identifying a student at risk</div>
-            <div class="ba-strip-rows">
-              <div class="ba-strip-row"><span class="ba-strip-label b">Before</span><div class="ba-strip-track"><div class="ba-strip-fill b" data-w="100"></div></div><span class="ba-strip-val">Too late</span></div>
-              <div class="ba-strip-row"><span class="ba-strip-label a">After</span><div class="ba-strip-track"><div class="ba-strip-fill a" data-w="16"></div></div><span class="ba-strip-val highlight">AI flag, early</span></div>
-            </div>
+
+          <div class="ba-card">
+            <div class="ba-task-label">Identifying a student at risk</div>
+            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Too late</div></div>
+            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">AI flags early</div></div>
           </div>
-          <div class="ba-strip">
-            <div class="ba-strip-header">🤝 Sharing impact with a new sponsor</div>
-            <div class="ba-strip-rows">
-              <div class="ba-strip-row"><span class="ba-strip-label b">Before</span><div class="ba-strip-track"><div class="ba-strip-fill b" data-w="88"></div></div><span class="ba-strip-val">Days of work</span></div>
-              <div class="ba-strip-row"><span class="ba-strip-label a">After</span><div class="ba-strip-track"><div class="ba-strip-fill a" data-w="4"></div></div><span class="ba-strip-val highlight">Share a link</span></div>
-            </div>
+
+          <div class="ba-card">
+            <div class="ba-task-label">Sharing impact with a new sponsor</div>
+            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Days of work</div></div>
+            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">Share a link</div></div>
           </div>
+
         </div>
       </div>
     </div>
@@ -581,7 +573,7 @@
 </section>
 
 <!-- ══════════════════════════════════════════
-     SLIDE 4 — IMPACT + CTA
+     SLIDE 4 IMPACT + CTA
 ══════════════════════════════════════════ -->
 <section class="slide s4" id="slide-3">
   <div class="slide-inner">
@@ -592,9 +584,9 @@
         <p class="s4-body">Technology at its best is invisible. It quietly handles the work that doesn't need human attention, so that human attention can go where it's irreplaceable.</p>
         <div class="outcome-list">
           <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>Hours recovered</strong> from administration flow back into visiting students, mentoring candidates, and building sponsor relationships.</div></div>
-          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>Patterns invisible on paper</strong> — which schools perform best, which students need support — are now immediately visible and actionable.</div></div>
-          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>A professional, living presence</strong> for donors — one that shows real students with real stories and real results, always current.</div></div>
-          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>The same platform</strong> can be deployed for other scholarship foundations — shared infrastructure, shared improvement, more students served.</div></div>
+          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>Patterns invisible on paper,</strong> like which schools perform best and which students need support, are now immediately visible and actionable.</div></div>
+          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>A professional, living presence</strong> for donors: real students with real stories and real results, always current.</div></div>
+          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>The same platform</strong> can be deployed for other scholarship foundations shared infrastructure, shared improvement, more students served.</div></div>
         </div>
       </div>
 
@@ -603,12 +595,12 @@
           <div class="ig-cell"><div class="ig-num">–95%</div><div class="ig-label">Time to prepare a sponsor report</div></div>
           <div class="ig-cell"><div class="ig-num">1 click</div><div class="ig-label">To access any student's full history</div></div>
           <div class="ig-cell"><div class="ig-num">Early</div><div class="ig-label">AI flags students at risk before crisis</div></div>
-          <div class="ig-cell"><div class="ig-num">Always</div><div class="ig-label">Live dashboard — no manual refresh needed</div></div>
+          <div class="ig-cell"><div class="ig-num">Always</div><div class="ig-label">Live dashboard, no manual refresh needed</div></div>
         </div>
 
         <div style="background:rgba(46,204,113,0.06);border:1px solid rgba(46,204,113,0.12);border-radius:10px;padding:1.3rem;">
-          <p style="font-family:var(--font-d);font-style:italic;font-size:0.9rem;line-height:1.65;color:rgba(240,237,230,0.75);margin-bottom:0.7rem;">"GMF didn't just pay my fees — they changed the way I see myself."</p>
-          <div style="font-size:0.68rem;color:var(--em2);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">— GMF student, Form 4 graduate 2024</div>
+          <p style="font-family:var(--font-d);font-style:italic;font-size:0.9rem;line-height:1.65;color:rgba(240,237,230,0.75);margin-bottom:0.7rem;">"GMF didn't just pay my fees. They changed the way I see myself."</p>
+          <div style="font-size:0.68rem;color:var(--em2);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">GMF student, Form 4 graduate 2024</div>
         </div>
       </div>
 
@@ -642,9 +634,6 @@
       current = idx;
       dots.forEach((d, i) => d.classList.toggle('active', i === idx));
       prog.style.width = ((idx + 1) / slides.length * 100) + '%';
-
-      // animate bars when slide 3 appears
-      if (idx === 2) animateBars();
     });
   }, { threshold: 0.5 });
 
@@ -655,16 +644,6 @@
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') goTo(current + 1);
     if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  goTo(current - 1);
   });
-
-  // bar animations
-  let barsAnimated = false;
-  function animateBars() {
-    if (barsAnimated) return;
-    barsAnimated = true;
-    document.querySelectorAll('.ba-strip-fill[data-w]').forEach((bar, i) => {
-      setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 100 + i * 55);
-    });
-  }
 </script>
 </body>
 </html>
