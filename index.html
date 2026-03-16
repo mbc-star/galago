@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Galago · AI for Foundations and NGOs</title>
   <meta name="description" content="We build AI-powered platforms for foundations and NGOs so your team spends less time on administration and more time on impact." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -92,9 +94,9 @@
 
     /* Big logo icon in hero */
     .hero-logo-icon {
-      width: 96px; height: 96px;
+      width: 140px; height: 140px;
       position: relative; z-index: 2;
-      margin-bottom: 1.8rem;
+      margin-bottom: 1.4rem;
       opacity: 0; animation: fadeUp 0.8s 0.1s forwards;
     }
 
@@ -246,21 +248,19 @@
     .why-point-content h4 { font-family: var(--font-d); font-size: 0.96rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem; }
     .why-point-content p { font-size: 0.84rem; line-height: 1.7; color: var(--ink3); }
 
-    /* BEFORE / AFTER */
-    .before-after { background: var(--cream2); padding: 2rem; border-radius: 14px; border: 1.5px solid var(--cream3); }
-    .ba-title { font-family: var(--font-d); font-size: 0.67rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--emerald); margin-bottom: 1.6rem; }
-    .ba-rows { display: flex; flex-direction: column; gap: 1.4rem; }
-    .ba-task { font-family: var(--font-d); font-size: 0.81rem; font-weight: 600; color: var(--ink2); margin-bottom: 0.55rem; }
-    .ba-bars { display: flex; flex-direction: column; gap: 4px; }
-    .ba-bar-wrap { display: flex; align-items: center; gap: 8px; }
-    .ba-bar-tag { font-family: var(--font-d); font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; width: 36px; flex-shrink: 0; }
-    .ba-bar-tag.before-tag { color: var(--ink3); }
-    .ba-bar-tag.after-tag  { color: var(--emerald); }
-    .ba-track { flex: 1; height: 6px; background: var(--cream3); border-radius: 100px; overflow: hidden; }
-    .ba-fill { height: 100%; border-radius: 100px; width: 0; transition: width 1.4s cubic-bezier(0.16,1,0.3,1); }
-    .ba-fill.before { background: rgba(10,21,13,0.12); }
-    .ba-fill.after  { background: var(--emerald); }
-    .ba-label { font-family: var(--font-d); font-size: 0.68rem; color: var(--ink3); width: 88px; flex-shrink: 0; text-align: right; }
+    /* BEFORE / AFTER cards */
+    .before-after { display: flex; flex-direction: column; gap: 8px; }
+    .ba-card { display: grid; grid-template-columns: 1fr 28px 1fr; background: var(--cream); border: 1.5px solid var(--cream3); border-radius: 12px; overflow: hidden; }
+    .ba-task-label { grid-column: 1 / -1; font-family: var(--font-d); font-size: 0.76rem; font-weight: 500; color: var(--ink3); padding: 10px 14px 0; }
+    .ba-side { padding: 6px 14px 12px; }
+    .ba-side-label { font-family: var(--font-d); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 2px; }
+    .ba-side.b .ba-side-label { color: var(--ink3); }
+    .ba-side.a .ba-side-label { color: var(--emerald); }
+    .ba-side-value { font-family: var(--font-d); font-size: 1.1rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+    .ba-side.b .ba-side-value { color: var(--ink); }
+    .ba-side.a .ba-side-value { color: var(--emerald); }
+    .ba-arrow-col { display: flex; align-items: center; justify-content: center; color: var(--cream3); padding-top: 6px; }
+    .ba-arrow-col svg { width: 14px; height: 14px; }
 
     /* CTA */
     .cta-section { background: var(--deep); text-align: center; padding: 8rem 2rem; position: relative; overflow: hidden; }
@@ -403,7 +403,7 @@
       .problem-grid, .case-grid, .why-grid, .how-header { grid-template-columns: 1fr; gap: 2.5rem; }
       .how-steps, .offer-grid { grid-template-columns: 1fr; }
       .case-stats { grid-template-columns: 1fr 1fr; }
-      .hero-logo-icon { width: 72px; height: 72px; }
+      .hero-logo-icon { width: 100px; height: 100px; }
     }
     @media (max-width: 600px) {
       section { padding: 4.5rem 1.2rem; }
@@ -493,7 +493,7 @@
   <p class="hero-sub">We build AI-powered platforms for foundations and NGOs so your team spends less time on administration and more time on the people you exist to serve.</p>
   <div class="hero-actions">
     <a href="gmf-story.html" class="btn-primary">See it in action →</a>
-    <a href="#contact" class="btn-ghost">Get in touch</a>
+    <a href="#" class="btn-ghost" onclick="openModal();return false;">Get in touch</a>
   </div>
   <div class="hero-scroll-hint">
     <span>Scroll</span>
@@ -687,38 +687,36 @@
 
       <div class="reveal d1">
         <span class="label" style="margin-bottom:1rem; display:block;">Time reclaimed</span>
-        <div class="before-after" id="ba-widget">
-          <div class="ba-title">Before AI vs. After AI</div>
-          <div class="ba-rows">
-            <div class="ba-row">
-              <div class="ba-task">Preparing a sponsor report</div>
-              <div class="ba-bars">
-                <div class="ba-bar-wrap"><span class="ba-bar-tag before-tag">Before</span><div class="ba-track"><div class="ba-fill before" data-w="92"></div></div><span class="ba-label">Half a day</span></div>
-                <div class="ba-bar-wrap"><span class="ba-bar-tag after-tag">After</span><div class="ba-track"><div class="ba-fill after" data-w="7"></div></div><span class="ba-label">5 minutes</span></div>
-              </div>
-            </div>
-            <div class="ba-row">
-              <div class="ba-task">Finding a beneficiary's full history</div>
-              <div class="ba-bars">
-                <div class="ba-bar-wrap"><span class="ba-bar-tag before-tag">Before</span><div class="ba-track"><div class="ba-fill before" data-w="78"></div></div><span class="ba-label">Search folders</span></div>
-                <div class="ba-bar-wrap"><span class="ba-bar-tag after-tag">After</span><div class="ba-track"><div class="ba-fill after" data-w="3"></div></div><span class="ba-label">One click</span></div>
-              </div>
-            </div>
-            <div class="ba-row">
-              <div class="ba-task">Programme performance overview</div>
-              <div class="ba-bars">
-                <div class="ba-bar-wrap"><span class="ba-bar-tag before-tag">Before</span><div class="ba-track"><div class="ba-fill before" data-w="86"></div></div><span class="ba-label">Manual Excel</span></div>
-                <div class="ba-bar-wrap"><span class="ba-bar-tag after-tag">After</span><div class="ba-track"><div class="ba-fill after" data-w="5"></div></div><span class="ba-label">Always live</span></div>
-              </div>
-            </div>
-            <div class="ba-row">
-              <div class="ba-task">Identifying a student at risk</div>
-              <div class="ba-bars">
-                <div class="ba-bar-wrap"><span class="ba-bar-tag before-tag">Before</span><div class="ba-track"><div class="ba-fill before" data-w="100"></div></div><span class="ba-label">Too late</span></div>
-                <div class="ba-bar-wrap"><span class="ba-bar-tag after-tag">After</span><div class="ba-track"><div class="ba-fill after" data-w="16"></div></div><span class="ba-label">AI flag, early</span></div>
-              </div>
-            </div>
+        <div class="before-after">
+
+          <div class="ba-card">
+            <div class="ba-task-label">Preparing a sponsor report</div>
+            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">½ day</div></div>
+            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">5 min</div></div>
           </div>
+
+          <div class="ba-card">
+            <div class="ba-task-label">Finding a beneficiary's full history</div>
+            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Folder search</div></div>
+            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">1 click</div></div>
+          </div>
+
+          <div class="ba-card">
+            <div class="ba-task-label">Programme performance overview</div>
+            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Manual Excel</div></div>
+            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">Always live</div></div>
+          </div>
+
+          <div class="ba-card">
+            <div class="ba-task-label">Identifying a student at risk</div>
+            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Too late</div></div>
+            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">AI flags early</div></div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -832,19 +830,6 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-  // ── Before/after bars ──
-  const barObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      e.target.querySelectorAll('.ba-fill[data-w]').forEach((bar, i) => {
-        setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, i * 60);
-      });
-      barObs.unobserve(e.target);
-    });
-  }, { threshold: 0.3 });
-  const baWidget = document.getElementById('ba-widget');
-  if (baWidget) barObs.observe(baWidget);
 
   // ── Nav scroll state ──
   window.addEventListener('scroll', () => {
