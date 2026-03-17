@@ -615,45 +615,44 @@
 <section class="offer" id="offer">
   <div class="inner">
     <span class="label reveal">Services</span>
-    <h2 class="reveal">Three ways to work <em>together</em></h2>
-    <div class="offer-grid">
+    <h2 class="reveal">Two ways to work <em>together</em></h2>
+    <div class="offer-grid" style="grid-template-columns: 1fr 1fr;">
+
       <div class="offer-card reveal">
         <span class="offer-icon">⚡</span>
-        <div class="offer-name">Galago Boost</div>
-        <div class="offer-tagline">AI Training and Workshops</div>
-        <p class="offer-desc">Hands-on training to get your team using AI effectively. From drafting reports to automating repetitive tasks.</p>
+        <div class="offer-name">AI Optimization</div>
+        <div class="offer-tagline">Do more with the tools you already have</div>
+        <p class="offer-desc">Your team is already using email, spreadsheets, and documents. AI can make every one of those workflows faster, sharper, and less draining. We audit what you do today and build practical AI into it — no new system required.</p>
         <ul class="offer-list">
-          <li>Half-day and full-day formats</li>
-          <li>Tailored to your tools and workflows</li>
-          <li>Practical exercises, not theory</li>
-          <li>Prompt libraries and templates included</li>
+          <li>Audit of your current workflows and pain points</li>
+          <li>AI prompt libraries tailored to your team</li>
+          <li>Hands-on workshops and training sessions</li>
+          <li>Donor reporting, grant writing, communications</li>
+          <li>Ongoing coaching as your needs evolve</li>
         </ul>
+        <div style="margin-top:1.8rem;">
+          <button onclick="openModal('optimization')" style="width:100%;background:var(--cream2);color:var(--ink);padding:0.75rem 1.5rem;border-radius:100px;font-family:var(--font-d);font-size:0.88rem;font-weight:700;border:1.5px solid var(--cream3);cursor:pointer;transition:background 0.2s,border-color 0.2s;">Book a discovery call</button>
+        </div>
       </div>
+
       <div class="offer-card featured reveal d1">
-        <div class="offer-badge">Most Popular</div>
-        <span class="offer-icon">🚀</span>
-        <div class="offer-name">Galago Deploy</div>
-        <div class="offer-tagline">Monthly Consulting and Build</div>
-        <p class="offer-desc">An embedded AI partner. Designing, building, and refining AI-powered tools month by month, with accountability for outcomes.</p>
+        <div class="offer-badge">Recommended for NGOs</div>
+        <span class="offer-icon">🌍</span>
+        <div class="offer-name">AI for NGOs</div>
+        <div class="offer-tagline">A dedicated platform built for your foundation</div>
+        <p class="offer-desc">Your own instance of the platform we built for Gakundi Memorial Foundation. Configured for your students, your schools, your sponsors. Deployed in weeks, not months. Your team gets a living system — we handle the technology.</p>
         <ul class="offer-list">
-          <li>Custom platform design and development</li>
-          <li>AI analysis and automation layers</li>
-          <li>Sponsor-facing dashboards and decks</li>
-          <li>Ongoing support and iteration</li>
+          <li>Dedicated platform instance, your branding</li>
+          <li>Student profiles, academic tracking, AI analysis</li>
+          <li>Live donor dashboard and partnership deck</li>
+          <li>Annual selection workflow and dossier management</li>
+          <li>Deployment project + annual licence</li>
         </ul>
+        <div style="margin-top:1.8rem;">
+          <button onclick="openModal('ngos')" style="width:100%;background:var(--ink);color:var(--cream);padding:0.75rem 1.5rem;border-radius:100px;font-family:var(--font-d);font-size:0.88rem;font-weight:700;border:none;cursor:pointer;transition:background 0.2s,transform 0.15s;">Request a demo</button>
+        </div>
       </div>
-      <div class="offer-card reveal d2">
-        <span class="offer-icon">📦</span>
-        <div class="offer-name">Galago Kit</div>
-        <div class="offer-tagline">Ready-to-Use Prompt Packs</div>
-        <p class="offer-desc">Curated prompt libraries built for NGO workflows. Immediate value without custom development.</p>
-        <ul class="offer-list">
-          <li>Donor reporting prompts</li>
-          <li>Beneficiary story writing</li>
-          <li>Grant application assistance</li>
-          <li>Impact data analysis</li>
-        </ul>
-      </div>
+
     </div>
   </div>
 </section>
@@ -748,44 +747,99 @@
     <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
 
     <div class="modal-form" id="modal-form">
-      <div class="modal-eyebrow">Let's Talk</div>
-      <div class="modal-title">Start the conversation</div>
-      <p class="modal-sub">No sales process. Tell us about your foundation and we'll get back to you within 48 hours.</p>
 
-      <div class="form-row">
-        <div class="form-row-2">
-          <div class="form-field">
-            <label for="f-name">Your name</label>
-            <input type="text" id="f-name" name="name" placeholder="Sophie Martin" required />
-          </div>
-          <div class="form-field">
-            <label for="f-org">Organisation</label>
-            <input type="text" id="f-org" name="organisation" placeholder="My Foundation" />
-          </div>
+      <!-- Step 1: offer picker (shown when openModal() called with no arg) -->
+      <div id="step-pick">
+        <div class="modal-eyebrow">Get Started</div>
+        <div class="modal-title">What brings you here?</div>
+        <p class="modal-sub">Choose the option that fits best and we'll ask the right questions.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:0.5rem;">
+          <button onclick="pickOffer('optimization')" style="background:var(--cream2);border:1.5px solid var(--cream3);border-radius:12px;padding:1rem 1.2rem;text-align:left;cursor:pointer;transition:border-color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='var(--emerald)'" onmouseout="this.style.borderColor='var(--cream3)'">
+            <div style="font-family:var(--font-d);font-size:0.92rem;font-weight:700;color:var(--ink);margin-bottom:0.2rem;">AI Optimization</div>
+            <div style="font-size:0.8rem;color:var(--ink3);">I want to use AI to improve my team's existing workflows</div>
+          </button>
+          <button onclick="pickOffer('ngos')" style="background:var(--forest);border:1.5px solid var(--emerald);border-radius:12px;padding:1rem 1.2rem;text-align:left;cursor:pointer;transition:border-color 0.2s,background 0.2s;" onmouseover="this.style.background='#1D3828'" onmouseout="this.style.background='var(--forest)'">
+            <div style="font-family:var(--font-d);font-size:0.92rem;font-weight:700;color:var(--cream);margin-bottom:0.2rem;">AI for NGOs <span style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:var(--emerald);color:var(--forest);padding:0.15rem 0.55rem;border-radius:100px;margin-left:6px;">Recommended</span></div>
+            <div style="font-size:0.8rem;color:rgba(200,217,200,0.6);">I want a dedicated platform for my foundation</div>
+          </button>
+          <button onclick="pickOffer('discovery')" style="background:none;border:1.5px solid var(--cream3);border-radius:12px;padding:0.85rem 1.2rem;text-align:left;cursor:pointer;" onmouseover="this.style.borderColor='var(--ink3)'" onmouseout="this.style.borderColor='var(--cream3)'">
+            <div style="font-family:var(--font-d);font-size:0.88rem;font-weight:600;color:var(--ink2);">Not sure yet — just a discovery call</div>
+          </button>
         </div>
-        <div class="form-field">
-          <label for="f-email">Email address</label>
-          <input type="email" id="f-email" name="email" placeholder="sophie@myfoundation.org" required />
-        </div>
-        <div class="form-field">
-          <label for="f-service">What are you looking for?</label>
-          <select id="f-service" name="service">
-            <option value="">Select a service</option>
-            <option value="deploy">Galago Deploy — platform build</option>
-            <option value="boost">Galago Boost — AI training</option>
-            <option value="kit">Galago Kit — prompt packs</option>
-            <option value="discovery">Just a discovery call for now</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="f-message">Tell us about your situation</label>
-          <textarea id="f-message" name="message" placeholder="We manage 80 students across 3 countries and struggle with donor reporting..."></textarea>
-        </div>
-        <button class="btn-submit" id="btn-submit" type="button">
-          <span id="btn-label">Send message</span>
-        </button>
-        <p class="form-note">We respond within 48 hours. Your data is never shared.</p>
       </div>
+
+      <!-- Step 2: form fields (hidden until offer picked) -->
+      <div id="step-form" style="display:none;">
+        <button onclick="backToPick()" style="background:none;border:none;cursor:pointer;font-family:var(--font-d);font-size:0.78rem;color:var(--ink3);margin-bottom:1rem;padding:0;display:flex;align-items:center;gap:4px;">← Back</button>
+        <div class="modal-eyebrow" id="form-eyebrow">Let's Talk</div>
+        <div class="modal-title" id="form-title">Tell us about your situation</div>
+        <p class="modal-sub" id="form-sub">We'll get back to you within 48 hours.</p>
+
+        <div class="form-row">
+          <div class="form-row-2">
+            <div class="form-field">
+              <label for="f-name">Your name</label>
+              <input type="text" id="f-name" name="name" placeholder="Sophie Martin" required />
+            </div>
+            <div class="form-field">
+              <label for="f-org">Organisation</label>
+              <input type="text" id="f-org" name="organisation" placeholder="My Foundation" />
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="f-email">Email address</label>
+            <input type="email" id="f-email" name="email" placeholder="sophie@myfoundation.org" required />
+          </div>
+
+          <!-- Optimization-specific questions -->
+          <div id="q-optimization" style="display:none;flex-direction:column;gap:0.9rem;">
+            <div class="form-field">
+              <label for="f-team-size">Team size</label>
+              <select id="f-team-size" name="team_size">
+                <option value="">Select</option>
+                <option value="1-5">1 to 5 people</option>
+                <option value="6-20">6 to 20 people</option>
+                <option value="20+">More than 20</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="f-tasks">Which tasks take the most time?</label>
+              <textarea id="f-tasks" name="tasks" placeholder="Donor reporting, grant writing, managing beneficiary data..." style="min-height:70px;"></textarea>
+            </div>
+          </div>
+
+          <!-- NGOs-specific questions -->
+          <div id="q-ngos" style="display:none;flex-direction:column;gap:0.9rem;">
+            <div class="form-field">
+              <label for="f-beneficiaries">How many beneficiaries do you manage?</label>
+              <select id="f-beneficiaries" name="beneficiaries">
+                <option value="">Select</option>
+                <option value="<50">Less than 50</option>
+                <option value="50-200">50 to 200</option>
+                <option value="200+">More than 200</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="f-current">How do you manage student/beneficiary data today?</label>
+              <textarea id="f-current" name="current_tools" placeholder="Spreadsheets, paper files, a CRM..." style="min-height:70px;"></textarea>
+            </div>
+          </div>
+
+          <!-- Discovery: just a message -->
+          <div id="q-discovery" style="display:none;">
+            <div class="form-field">
+              <label for="f-message">Anything you'd like to share?</label>
+              <textarea id="f-message" name="message" placeholder="Tell us a bit about your foundation and what you're looking for..."></textarea>
+            </div>
+          </div>
+
+          <button class="btn-submit" id="btn-submit" type="button">
+            <span id="btn-label">Send message</span>
+          </button>
+          <p class="form-note">We respond within 48 hours. Your data is never shared.</p>
+        </div>
+      </div>
+
     </div>
 
     <div class="modal-success" id="modal-success">
@@ -838,16 +892,64 @@
 
   // ── Modal ──
   const overlay = document.getElementById('modal-overlay');
+  let selectedOffer = '';
 
-  function openModal() {
+  const offerConfig = {
+    optimization: {
+      eyebrow: 'AI Optimization',
+      title: 'Tell us about your workflows',
+      sub: 'We will audit your current processes and find where AI can save the most time.',
+    },
+    ngos: {
+      eyebrow: 'AI for NGOs',
+      title: 'Tell us about your foundation',
+      sub: 'We will set up a demo of the platform configured for your context.',
+    },
+    discovery: {
+      eyebrow: 'Discovery Call',
+      title: 'Let\'s get to know each other',
+      sub: 'No agenda. Just a conversation about where you are and where you want to go.',
+    },
+  };
+
+  function openModal(offer) {
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-    setTimeout(() => document.getElementById('f-name').focus(), 300);
+    if (offer) {
+      pickOffer(offer);
+    } else {
+      document.getElementById('step-pick').style.display = 'block';
+      document.getElementById('step-form').style.display = 'none';
+    }
+    document.getElementById('modal-form').classList.remove('hidden');
+    document.getElementById('modal-success').classList.remove('visible');
   }
 
   function closeModal() {
     overlay.classList.remove('open');
     document.body.style.overflow = '';
+  }
+
+  function backToPick() {
+    document.getElementById('step-pick').style.display = 'block';
+    document.getElementById('step-form').style.display = 'none';
+  }
+
+  function pickOffer(offer) {
+    selectedOffer = offer;
+    const cfg = offerConfig[offer];
+    document.getElementById('step-pick').style.display = 'none';
+    document.getElementById('step-form').style.display = 'block';
+    document.getElementById('form-eyebrow').textContent = cfg.eyebrow;
+    document.getElementById('form-title').textContent = cfg.title;
+    document.getElementById('form-sub').textContent = cfg.sub;
+
+    // Show/hide contextual questions
+    ['optimization','ngos','discovery'].forEach(o => {
+      const el = document.getElementById('q-' + o);
+      if (el) el.style.display = o === offer ? 'flex' : 'none';
+    });
+    setTimeout(() => document.getElementById('f-name').focus(), 100);
   }
 
   document.getElementById('modal-close').addEventListener('click', closeModal);
@@ -856,16 +958,29 @@
 
   // ── Form submission ──
   document.getElementById('btn-submit').addEventListener('click', async () => {
-    const name    = document.getElementById('f-name').value.trim();
-    const email   = document.getElementById('f-email').value.trim();
-    const org     = document.getElementById('f-org').value.trim();
-    const service = document.getElementById('f-service').value;
-    const message = document.getElementById('f-message').value.trim();
+    const name  = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const org   = document.getElementById('f-org').value.trim();
 
     if (!name || !email) {
       document.getElementById('f-name').style.borderColor = name ? '' : 'var(--emerald)';
       document.getElementById('f-email').style.borderColor = email ? '' : 'var(--emerald)';
       return;
+    }
+
+    // Gather contextual fields
+    let extra = '';
+    if (selectedOffer === 'optimization') {
+      const teamSize = document.getElementById('f-team-size').value;
+      const tasks    = document.getElementById('f-tasks').value.trim();
+      extra = `Team size: ${teamSize}\nTime-consuming tasks: ${tasks}`;
+    } else if (selectedOffer === 'ngos') {
+      const beneficiaries = document.getElementById('f-beneficiaries').value;
+      const current       = document.getElementById('f-current').value.trim();
+      extra = `Beneficiaries: ${beneficiaries}\nCurrent tools: ${current}`;
+    } else {
+      const msg = document.getElementById('f-message').value.trim();
+      extra = msg;
     }
 
     const btn = document.getElementById('btn-submit');
@@ -877,18 +992,14 @@
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, organisation: org, service, message })
+        body: JSON.stringify({ name, email, organisation: org, service: selectedOffer, message: extra })
       });
-
       if (res.ok) {
         document.getElementById('modal-form').classList.add('hidden');
         document.getElementById('modal-success').classList.add('visible');
-      } else {
-        throw new Error('Server error');
-      }
+      } else { throw new Error(); }
     } catch {
-      // Fallback: open mailto if API not yet deployed
-      window.location.href = `mailto:contact@mygalago.com?subject=Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(`Name: ${name}\nOrg: ${org}\nService: ${service}\n\n${message}`)}`;
+      window.location.href = `mailto:contact@mygalago.com?subject=Contact: ${encodeURIComponent(name)}&body=${encodeURIComponent(`Offer: ${selectedOffer}\nOrg: ${org}\n\n${extra}`)}`;
       closeModal();
     } finally {
       btn.disabled = false;
