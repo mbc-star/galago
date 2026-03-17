@@ -3,336 +3,439 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GMF × Galago From Paper to Platform</title>
+  <title>GMF Digital Transformation · Galago</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="shortcut icon" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --cream:   #F0EDE6;
-      --cream2:  #E8E4DC;
       --cream3:  #D8D4CC;
       --ink:     #0A150D;
       --ink2:    #2A3D2E;
       --ink3:    #5A6E5C;
       --forest:  #12251A;
-      --deep:    #0D1A12;
       --emerald: #1A9E4A;
       --em2:     #2ECC71;
-      --red:     #C0392B;
-      --amber:   #D4831A;
+      --cyan:    #00D4DD;
       --font-d:  'Outfit', sans-serif;
       --font-b:  'Inter', sans-serif;
+      --font-g:  'Space Grotesk', sans-serif;
     }
 
-    html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: #0a0a0a; color: #fff; overflow-x: hidden; }
 
-    body {
-      font-family: var(--font-b);
-      background: var(--cream);
-      color: var(--ink);
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    .topbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1rem 2.5rem;
-      background: rgba(240,237,230,0.9);
-      backdrop-filter: blur(16px);
+      background: rgba(240,237,230,0.92);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--cream3);
     }
-    .topbar-logo {
-      font-family: var(--font-d); font-size: 1rem; font-weight: 800;
-      color: var(--ink); text-decoration: none; letter-spacing: -0.02em;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .topbar-logo span { color: var(--emerald); }
-    .topbar-back {
-      font-size: 0.78rem; font-weight: 500; color: var(--ink3);
-      text-decoration: none; display: flex; align-items: center; gap: 4px;
-      transition: color 0.2s;
-    }
-    .topbar-back:hover { color: var(--ink); }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon { width: 32px; height: 32px; flex-shrink: 0; }
+    .nav-logo-name { font-family: var(--font-d); font-size: 1.1rem; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
+    .nav-logo-sub  { font-size: 0.55rem; font-weight: 600; letter-spacing: 0.2em; color: var(--emerald); text-transform: uppercase; display: block; }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-back { font-family: var(--font-d); font-size: 0.82rem; font-weight: 500; color: var(--ink2); text-decoration: none; display: flex; align-items: center; gap: 4px; transition: color 0.2s; }
+    .nav-back:hover { color: var(--ink); }
+    .nav-pill { font-family: var(--font-d); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--forest); color: var(--em2); padding: 0.3rem 0.85rem; border-radius: 100px; }
 
-    /* slide dots */
+    /* SLIDE WRAPPER */
+    .slides-wrapper { padding-top: 60px; }
+
+    /* SLIDE DOTS */
     .slide-dots {
-      position: fixed; right: 2rem; top: 50%; transform: translateY(-50%);
-      z-index: 200; display: flex; flex-direction: column; gap: 10px;
+      position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%);
+      z-index: 400; display: flex; flex-direction: column; gap: 10px;
     }
-    .dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--cream3); border: 1.5px solid var(--ink3);
-      cursor: pointer; transition: background 0.25s, transform 0.25s;
-    }
-    .dot.active { background: var(--emerald); border-color: var(--emerald); transform: scale(1.3); }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: background 0.25s, transform 0.25s; }
+    .dot.active { background: var(--cyan); transform: scale(1.4); }
 
-    /* ── SLIDES ── */
+    /* PROGRESS BAR */
+    .progress-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.06); z-index: 400; }
+    .progress-fill { height: 100%; background: var(--cyan); transition: width 0.4s ease; width: 25%; }
+
+    /* SLIDES */
     .slide {
-      min-height: 100vh;
-      scroll-snap-align: start;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 6rem 2rem 4rem;
+      min-height: calc(100vh - 60px);
+      width: 100%;
       position: relative;
+      display: flex;
+      align-items: center;
       overflow: hidden;
     }
 
-    .slide-inner { max-width: 1060px; width: 100%; margin: 0 auto; }
+    /* ══ SLIDE 1 — HERO ══ */
+    .s1 { background: #0a0a0a; }
 
-    /* slide numbers */
-    .slide-num {
-      font-family: var(--font-d); font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 0.8rem;
-      display: flex; align-items: center; gap: 0.6rem;
+    .s1-bg-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(0,212,221,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,221,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
     }
-    .slide-num::after { content: ''; flex: 1; max-width: 40px; height: 1px; }
+    .s1-glow {
+      position: absolute; top: 20%; right: -10%;
+      width: 600px; height: 600px;
+      background: radial-gradient(ellipse, rgba(0,212,221,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
 
-    /* ══════════════════════════════════════════
-       SLIDE 1 INTRO / CONTEXT
-    ══════════════════════════════════════════ */
-    .s1 { background: var(--forest); }
-    .s1 .slide-num { color: var(--em2); }
-    .s1 .slide-num::after { background: var(--em2); opacity: 0.4; }
+    .s1-inner {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto;
+      padding: 4rem 4rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+      width: 100%;
+    }
 
-    .s1-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-
-    .s1-kicker {
+    .s1-tag {
+      display: inline-block;
       font-family: var(--font-d); font-size: 0.7rem; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase; color: var(--em2);
-      margin-bottom: 1.2rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      border: 1px solid var(--cyan); color: var(--cyan);
+      padding: 0.3rem 0.9rem; border-radius: 100px;
+      margin-bottom: 1.5rem;
     }
 
     .s1-title {
-      font-family: var(--font-d); font-size: clamp(2rem, 4.5vw, 3.8rem); font-weight: 800;
-      color: var(--cream); line-height: 1.06; letter-spacing: -0.03em;
-      margin-bottom: 1.4rem;
+      font-family: var(--font-g); font-size: clamp(2.4rem,4vw,4rem);
+      font-weight: 700; line-height: 1.08; letter-spacing: -0.03em;
+      color: #fff; margin-bottom: 1.2rem;
     }
-    .s1-title em { font-style: normal; color: var(--em2); }
 
-    .s1-body { font-size: 1rem; line-height: 1.8; color: rgba(240,237,230,0.65); margin-bottom: 2rem; }
+    .s1-body {
+      font-size: 1.05rem; line-height: 1.75; color: rgba(255,255,255,0.55);
+      font-weight: 300; max-width: 500px; margin-bottom: 2.5rem;
+    }
 
     .s1-stats {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-      background: rgba(46,204,113,0.1); border-radius: 10px; overflow: hidden;
-      border: 1px solid rgba(46,204,113,0.12);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      max-width: 440px;
     }
-    .s1-stat { background: rgba(13,26,18,0.7); padding: 1.2rem 1rem; text-align: center; }
-    .s1-stat-n { font-family: var(--font-d); font-size: 1.8rem; font-weight: 800; color: var(--em2); letter-spacing: -0.02em; line-height: 1; }
-    .s1-stat-l { font-size: 0.68rem; color: rgba(200,217,200,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; }
 
-    /* GMF card visual */
-    .s1-visual { position: relative; }
-    .foundation-card {
-      background: rgba(240,237,230,0.04); border: 1px solid rgba(46,204,113,0.15);
-      border-radius: 14px; padding: 2rem; position: relative; overflow: hidden;
+    .stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 1.2rem 1.4rem;
+      transition: border-color 0.25s;
     }
-    .foundation-card::before {
-      content: ''; position: absolute; top: 0; right: 0;
-      width: 60%; height: 100%;
-      background: radial-gradient(ellipse at 100% 0%, rgba(46,204,113,0.06), transparent 70%);
+    .stat-card:hover { border-color: rgba(0,212,221,0.3); }
+    .stat-value { font-family: var(--font-g); font-size: 2rem; font-weight: 700; color: var(--cyan); line-height: 1; margin-bottom: 0.3rem; letter-spacing: -0.02em; }
+    .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; }
+
+    /* right side visual */
+    .s1-visual {
+      display: flex; flex-direction: column; gap: 12px; align-items: flex-end;
     }
-    .fc-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; }
-    .fc-logo-dot { width: 32px; height: 32px; border-radius: 8px; background: rgba(46,204,113,0.12); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
-    .fc-logo-name { font-family: var(--font-d); font-size: 0.95rem; font-weight: 700; color: var(--cream); }
-    .fc-logo-sub { font-size: 0.65rem; color: var(--em2); letter-spacing: 0.1em; text-transform: uppercase; }
-    .fc-quote {
-      font-family: var(--font-d); font-style: italic; font-size: 0.92rem;
-      line-height: 1.65; color: rgba(240,237,230,0.7); margin-bottom: 1rem;
+
+    .s1-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 1.4rem 1.6rem; width: 100%;
     }
-    .fc-cite { font-size: 0.68rem; color: var(--em2); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
-    .fc-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.4rem; }
-    .fc-tag { font-size: 0.65rem; font-weight: 500; padding: 0.2rem 0.65rem; border-radius: 100px; border: 1px solid rgba(46,204,113,0.2); color: var(--em2); }
 
-    /* ══════════════════════════════════════════
-       SLIDE 2 THE BEFORE
-    ══════════════════════════════════════════ */
-    .s2 { background: var(--cream2); }
-    .s2 .slide-num { color: var(--red); }
-    .s2 .slide-num::after { background: var(--red); opacity: 0.3; }
+    .s1-card-label { font-family: var(--font-d); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.6rem; }
+    .s1-card-quote { font-family: var(--font-g); font-style: italic; font-size: 0.95rem; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 0.6rem; }
+    .s1-card-author { font-size: 0.72rem; color: rgba(255,255,255,0.35); }
 
-    .s2-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .s1-badge-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+    .s1-badge { font-size: 0.65rem; font-weight: 500; padding: 0.2rem 0.6rem; border-radius: 100px; border: 1px solid rgba(0,212,221,0.2); color: var(--cyan); }
 
-    .s2-title { font-family: var(--font-d); font-size: clamp(1.8rem,4vw,3.2rem); font-weight: 800; color: var(--ink); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 1.2rem; }
-    .s2-title em { font-style: normal; color: var(--red); }
-    .s2-body { font-size: 0.95rem; line-height: 1.8; color: var(--ink2); margin-bottom: 2rem; }
-
-    .chaos-list { display: flex; flex-direction: column; gap: 0; }
-    .chaos-item {
-      display: flex; align-items: flex-start; gap: 1rem;
-      padding: 1.1rem 1.2rem;
-      background: var(--cream); border-left: 3px solid transparent;
-      margin-bottom: 2px; transition: border-color 0.2s;
-    }
-    .chaos-item:hover { border-left-color: var(--red); }
-    .chaos-icon { flex-shrink: 0; width: 28px; height: 28px; background: rgba(192,57,43,0.08); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; margin-top: 1px; }
-    .chaos-text h4 { font-family: var(--font-d); font-size: 0.88rem; font-weight: 700; color: var(--ink); margin-bottom: 0.2rem; }
-    .chaos-text p { font-size: 0.8rem; line-height: 1.6; color: var(--ink3); }
-
-    /* right col: visual chaos stacks */
-    .chaos-visual { display: flex; flex-direction: column; gap: 0.8rem; padding-top: 1rem; }
-
-    .file-stack {
-      background: var(--cream); border: 1.5px solid var(--cream3); border-radius: 10px;
-      padding: 1rem 1.2rem; position: relative; overflow: hidden;
-    }
-    .file-stack::before {
-      content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
-    }
-    .file-stack.red::before { background: var(--red); }
-    .file-stack.amber::before { background: var(--amber); }
-    .file-stack.gray::before { background: var(--cream3); }
-
-    .fs-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
-    .fs-title { font-family: var(--font-d); font-size: 0.8rem; font-weight: 700; color: var(--ink); }
-    .fs-badge { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.55rem; border-radius: 100px; }
-    .fs-badge.danger { background: rgba(192,57,43,0.1); color: var(--red); }
-    .fs-badge.warn   { background: rgba(212,131,26,0.1); color: var(--amber); }
-    .fs-badge.neutral { background: rgba(10,21,13,0.06); color: var(--ink3); }
-
-    .fs-files { display: flex; flex-wrap: wrap; gap: 0.3rem; }
-    .fs-file { font-size: 0.68rem; background: var(--cream2); border: 1px solid var(--cream3); padding: 0.18rem 0.5rem; border-radius: 4px; color: var(--ink3); font-family: monospace; }
-
-    .time-cost {
-      display: flex; align-items: center; gap: 0.6rem;
-      background: rgba(192,57,43,0.06); border: 1px solid rgba(192,57,43,0.15);
-      border-radius: 8px; padding: 0.9rem 1.1rem; margin-top: 0.5rem;
-    }
-    .tc-icon { font-size: 1.2rem; flex-shrink: 0; }
-    .tc-label { font-size: 0.8rem; font-weight: 500; color: var(--ink2); }
-    .tc-value { font-family: var(--font-d); font-size: 1rem; font-weight: 800; color: var(--red); margin-left: auto; }
-
-    /* ══════════════════════════════════════════
-       SLIDE 3 THE AFTER
-    ══════════════════════════════════════════ */
-    .s3 { background: var(--cream); }
-    .s3 .slide-num { color: var(--emerald); }
-    .s3 .slide-num::after { background: var(--emerald); opacity: 0.4; }
-
-    .s3-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-
-    .s3-title { font-family: var(--font-d); font-size: clamp(1.8rem,4vw,3.2rem); font-weight: 800; color: var(--ink); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 1.2rem; }
-    .s3-title em { font-style: normal; color: var(--emerald); }
-    .s3-body { font-size: 0.95rem; line-height: 1.8; color: var(--ink2); margin-bottom: 2rem; }
-
-    /* platform mockup cards */
-    .platform-cards { display: flex; flex-direction: column; gap: 0.7rem; }
-
-    .pcard {
-      background: var(--cream2); border: 1.5px solid var(--cream3);
-      border-radius: 10px; padding: 1rem 1.2rem;
-      display: flex; align-items: flex-start; gap: 0.9rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .pcard:hover { border-color: var(--emerald); box-shadow: 0 4px 16px rgba(26,158,74,0.08); }
-    .pcard-icon { flex-shrink: 0; width: 30px; height: 30px; background: rgba(26,158,74,0.1); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; }
-    .pcard-content h4 { font-family: var(--font-d); font-size: 0.85rem; font-weight: 700; color: var(--ink); margin-bottom: 0.15rem; }
-    .pcard-content p { font-size: 0.77rem; line-height: 1.55; color: var(--ink3); }
-    .pcard-pill { display: inline-block; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(26,158,74,0.1); color: var(--emerald); padding: 0.14rem 0.5rem; border-radius: 100px; margin-top: 0.3rem; }
-
-    /* right: before/after cards */
-    .ba-cards { display: flex; flex-direction: column; gap: 8px; padding-top: 0.5rem; }
-    .ba-card { display: grid; grid-template-columns: 1fr 28px 1fr; background: rgba(240,237,230,0.06); border: 1px solid rgba(46,204,113,0.12); border-radius: 12px; overflow: hidden; }
-    .ba-task-label { grid-column: 1 / -1; font-family: var(--font-d); font-size: 0.74rem; font-weight: 500; color: rgba(200,217,200,0.55); padding: 10px 14px 0; }
-    .ba-side { padding: 6px 14px 12px; }
-    .ba-side-label { font-family: var(--font-d); font-size: 0.57rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 2px; }
-    .ba-side.b .ba-side-label { color: rgba(200,217,200,0.35); }
-    .ba-side.a .ba-side-label { color: var(--em2); }
-    .ba-side-value { font-family: var(--font-d); font-size: 1.1rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
-    .ba-side.b .ba-side-value { color: rgba(240,237,230,0.5); }
-    .ba-side.a .ba-side-value { color: var(--em2); }
-    .ba-arrow-col { display: flex; align-items: center; justify-content: center; color: rgba(46,204,113,0.2); padding-top: 6px; }
-    .ba-arrow-col svg { width: 14px; height: 14px; }
-
-    /* ══════════════════════════════════════════
-       SLIDE 4 IMPACT + CTA
-    ══════════════════════════════════════════ */
-    .s4 { background: var(--forest); }
-    .s4 .slide-num { color: var(--em2); }
-    .s4 .slide-num::after { background: var(--em2); opacity: 0.4; }
-
-    .s4-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-
-    .s4-title { font-family: var(--font-d); font-size: clamp(1.8rem,4vw,3.4rem); font-weight: 800; color: var(--cream); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 1.2rem; }
-    .s4-title em { font-style: normal; color: var(--em2); }
-    .s4-body { font-size: 0.95rem; line-height: 1.8; color: rgba(240,237,230,0.65); margin-bottom: 2rem; }
-
-    .outcome-list { display: flex; flex-direction: column; gap: 0.8rem; }
-    .outcome-item { display: flex; align-items: flex-start; gap: 0.9rem; }
-    .outcome-dot { flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--em2); margin-top: 6px; }
-    .outcome-text { font-size: 0.88rem; line-height: 1.65; color: rgba(240,237,230,0.7); }
-    .outcome-text strong { color: var(--cream); font-weight: 600; }
-
-    /* impact metrics grid */
-    .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(46,204,113,0.1); border-radius: 14px; overflow: hidden; border: 1px solid rgba(46,204,113,0.15); }
-    .ig-cell { background: rgba(13,26,18,0.7); padding: 1.5rem 1.3rem; }
-    .ig-num { font-family: var(--font-d); font-size: 2.4rem; font-weight: 800; color: var(--em2); letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.3rem; }
-    .ig-label { font-size: 0.72rem; color: rgba(200,217,200,0.55); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; line-height: 1.4; }
-
-    /* CTA row */
-    .s4-cta-row {
-      grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center;
-      text-align: center; gap: 1.2rem; padding-top: 1rem;
-      border-top: 1px solid rgba(46,204,113,0.12); margin-top: 1rem;
-    }
-    .s4-cta-text { font-size: 0.9rem; color: rgba(240,237,230,0.6); }
-    .s4-btn-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-    .btn-em {
-      background: var(--em2); color: var(--forest); padding: 0.8rem 2rem;
-      border-radius: 100px; font-size: 0.88rem; font-weight: 700; text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-em:hover { background: #A8FF78; transform: translateY(-2px); }
-    .btn-outline {
-      color: rgba(240,237,230,0.75); padding: 0.8rem 2rem; border-radius: 100px;
-      font-size: 0.88rem; font-weight: 500; text-decoration: none;
-      border: 1px solid rgba(240,237,230,0.2); transition: border-color 0.2s;
-    }
-    .btn-outline:hover { border-color: rgba(240,237,230,0.5); color: var(--cream); }
-
-    /* ── PROGRESS BAR ── */
-    .progress-bar {
-      position: fixed; bottom: 0; left: 0; right: 0; height: 3px;
-      background: var(--cream3); z-index: 200;
-    }
-    .progress-fill { height: 100%; background: var(--emerald); transition: width 0.4s ease; width: 25%; }
-
-    /* ── NEXT ARROW ── */
-    .next-arrow {
+    .s1-footer {
       position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
-      cursor: pointer; opacity: 0.45; transition: opacity 0.2s;
-      font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: inherit;
+      font-family: var(--font-d); font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.2);
     }
-    .next-arrow:hover { opacity: 0.8; }
-    .next-arrow svg { animation: bounce 2s ease-in-out infinite; }
-    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(4px)} }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 800px) {
-      .s1-layout, .s2-layout, .s3-layout, .s4-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-      .impact-grid { grid-template-columns: 1fr 1fr; }
+    /* ══ SLIDE 2 — CHALLENGE ══ */
+    .s2 { background: #0d0d0d; }
+
+    .s2-inner {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto; padding: 4rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      align-items: start; width: 100%;
+    }
+
+    .slide-step {
+      font-family: var(--font-d); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--cyan);
+      margin-bottom: 1.2rem; display: block;
+    }
+
+    .accent-bar { width: 50px; height: 3px; background: var(--cyan); margin-bottom: 1.2rem; }
+
+    .slide-title {
+      font-family: var(--font-g); font-size: clamp(1.8rem,3vw,3rem);
+      font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
+      color: #fff; margin-bottom: 1rem;
+    }
+    .slide-title span { color: rgba(255,255,255,0.4); }
+
+    .slide-sub { font-size: 0.95rem; line-height: 1.7; color: rgba(255,255,255,0.5); margin-bottom: 2rem; font-weight: 300; }
+
+    .pain-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 2rem; }
+
+    .pain-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1rem 1.2rem;
+      border-left: 2px solid transparent;
+      background: rgba(255,255,255,0.02);
+      margin-bottom: 2px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .pain-item:hover { border-color: #ef4444; background: rgba(239,68,68,0.04); }
+    .pain-icon { flex-shrink: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; color: #ef4444; font-size: 0.85rem; margin-top: 1px; }
+    .pain-text { font-size: 0.88rem; line-height: 1.65; color: rgba(255,255,255,0.65); }
+    .pain-text strong { color: #fff; font-weight: 600; }
+
+    .quote-box {
+      background: rgba(0,212,221,0.05);
+      border: 1px solid rgba(0,212,221,0.15);
+      border-radius: 10px; padding: 1.3rem 1.5rem;
+    }
+    .quote-text { font-family: var(--font-g); font-style: italic; font-size: 0.9rem; line-height: 1.65; color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; }
+    .quote-author { font-size: 0.68rem; color: var(--cyan); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* right visual — chaos cards */
+    .chaos-visual { display: flex; flex-direction: column; gap: 10px; padding-top: 3rem; }
+
+    .chaos-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 1rem 1.3rem;
+      border-left: 3px solid transparent;
+    }
+    .chaos-card.red   { border-left-color: #ef4444; }
+    .chaos-card.amber { border-left-color: #f59e0b; }
+    .chaos-card.gray  { border-left-color: rgba(255,255,255,0.15); }
+
+    .cc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+    .cc-title { font-family: var(--font-d); font-size: 0.8rem; font-weight: 700; color: #fff; }
+    .cc-badge { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.55rem; border-radius: 100px; }
+    .cc-badge.danger  { background: rgba(239,68,68,0.12); color: #ef4444; }
+    .cc-badge.warn    { background: rgba(245,158,11,0.12); color: #f59e0b; }
+    .cc-badge.neutral { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); }
+    .cc-files { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .cc-file { font-size: 0.65rem; font-family: monospace; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); padding: 0.15rem 0.45rem; border-radius: 4px; color: rgba(255,255,255,0.5); }
+
+    .time-row {
+      display: flex; align-items: center; gap: 0.8rem;
+      background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.15);
+      border-radius: 8px; padding: 0.8rem 1rem;
+    }
+    .tr-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .tr-label { font-size: 0.8rem; color: rgba(255,255,255,0.55); flex: 1; }
+    .tr-value { font-family: var(--font-g); font-size: 0.95rem; font-weight: 700; color: #ef4444; }
+
+    /* ══ SLIDE 3 — SOLUTION ══ */
+    .s3 { background: #0a0a0a; }
+
+    .s3-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(0,212,221,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,221,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 80% 80% at 100% 50%, black 20%, transparent 100%);
+    }
+
+    .s3-inner {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto; padding: 4rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      align-items: start; width: 100%;
+    }
+
+    .feature-list { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1rem; }
+
+    .feature-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1.2rem; background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06); border-radius: 10px;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .feature-item:hover { border-color: rgba(0,212,221,0.25); background: rgba(0,212,221,0.04); }
+
+    .fi-icon {
+      flex-shrink: 0; width: 36px; height: 36px;
+      background: rgba(0,212,221,0.1); border: 1px solid rgba(0,212,221,0.2);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      color: var(--cyan); font-size: 0.9rem;
+    }
+    .fi-text h3 { font-family: var(--font-d); font-size: 0.92rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
+    .fi-text p  { font-size: 0.82rem; line-height: 1.6; color: rgba(255,255,255,0.45); }
+
+    /* right: app screenshots grid */
+    .screenshots-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 1rem;
+    }
+
+    .screenshot-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .screenshot-card:hover { border-color: rgba(0,212,221,0.35); transform: translateY(-2px); }
+
+    .sc-img {
+      width: 100%; height: 140px;
+      object-fit: cover; object-position: top left;
+      display: block;
+    }
+
+    .sc-label { padding: 0.5rem 0.8rem; font-family: var(--font-d); font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.5); border-top: 1px solid rgba(255,255,255,0.06); }
+
+    /* ══ SLIDE 4 — IMPACT ══ */
+    .s4 { background: #0a0a0a; }
+
+    .s4-glow1 {
+      position: absolute; top: -10%; left: -5%;
+      width: 500px; height: 500px;
+      background: radial-gradient(ellipse, rgba(0,212,221,0.06) 0%, transparent 65%);
+    }
+    .s4-glow2 {
+      position: absolute; bottom: -10%; right: -5%;
+      width: 500px; height: 500px;
+      background: radial-gradient(ellipse, rgba(46,204,113,0.05) 0%, transparent 65%);
+    }
+
+    .s4-inner {
+      position: relative; z-index: 2;
+      max-width: 1100px; margin: 0 auto; padding: 4rem;
+      width: 100%;
+    }
+
+    .s4-header { text-align: center; margin-bottom: 3rem; }
+    .s4-header .accent-bar { margin: 0 auto 1.2rem; }
+
+    .comparison-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+
+    .comp-row {
+      background: rgba(255,255,255,0.025);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .comp-row:hover { background: rgba(255,255,255,0.04); transform: scaleX(1.005); }
+
+    .comp-cell { padding: 1.1rem 1.4rem; vertical-align: middle; }
+    .comp-cell:first-child { border-radius: 10px 0 0 10px; width: 38%; }
+    .comp-cell:last-child  { border-radius: 0 10px 10px 0; width: 31%; }
+
+    .comp-task { font-weight: 600; color: rgba(255,255,255,0.85); font-size: 0.92rem; display: flex; align-items: center; gap: 0.7rem; }
+    .comp-task i { color: rgba(255,255,255,0.3); width: 18px; text-align: center; font-size: 0.85rem; }
+
+    .comp-before { display: flex; align-items: center; gap: 0.6rem; color: rgba(255,255,255,0.45); font-size: 0.88rem; }
+    .comp-after  { display: flex; align-items: center; gap: 0.6rem; font-size: 0.88rem; font-weight: 600; color: var(--em2); }
+
+    .tag-before {
+      background: rgba(239,68,68,0.1); color: #ef4444;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.15rem 0.55rem; border-radius: 100px; flex-shrink: 0;
+    }
+    .tag-after {
+      background: rgba(46,204,113,0.1); color: var(--em2);
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.15rem 0.55rem; border-radius: 100px; flex-shrink: 0;
+    }
+
+    .s4-metrics {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 12px;
+      margin-top: 2.5rem;
+    }
+
+    .metric-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 1.2rem; text-align: center;
+      transition: border-color 0.25s;
+    }
+    .metric-card:hover { border-color: rgba(0,212,221,0.3); }
+    .metric-num { font-family: var(--font-g); font-size: 2rem; font-weight: 700; color: var(--cyan); line-height: 1; margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+    .metric-lbl { font-size: 0.72rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4; }
+
+    .s4-quote-row {
+      margin-top: 2rem;
+      background: rgba(0,212,221,0.05); border: 1px solid rgba(0,212,221,0.12);
+      border-radius: 10px; padding: 1.3rem 1.6rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+    }
+    .s4-quote-text { font-family: var(--font-g); font-style: italic; font-size: 0.92rem; line-height: 1.6; color: rgba(255,255,255,0.65); }
+    .s4-quote-cite { font-size: 0.68rem; color: var(--cyan); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+
+    .s4-cta { text-align: center; margin-top: 2.5rem; display: flex; gap: 1rem; justify-content: center; }
+    .btn-cta {
+      background: var(--em2); color: var(--forest);
+      padding: 0.8rem 2rem; border-radius: 100px;
+      font-family: var(--font-d); font-size: 0.9rem; font-weight: 700;
+      text-decoration: none; transition: background 0.2s, transform 0.15s;
+    }
+    .btn-cta:hover { background: #A8FF78; transform: translateY(-2px); }
+    .btn-outline-dark {
+      color: rgba(255,255,255,0.6); padding: 0.8rem 2rem; border-radius: 100px;
+      font-family: var(--font-d); font-size: 0.9rem; font-weight: 500;
+      text-decoration: none; border: 1px solid rgba(255,255,255,0.15);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline-dark:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .s1-inner, .s2-inner, .s3-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.5rem; }
+      .s4-inner { padding: 3rem 1.5rem; }
+      .s4-metrics { grid-template-columns: 1fr 1fr; }
       .slide-dots { display: none; }
+      .nav { padding: 0.9rem 1.2rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
-<nav class="topbar">
-  <a href="index.html" class="topbar-logo">
-    Galago <span>·</span> GMF Case Study
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg class="nav-logo-icon" viewBox="40 118 115 100" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="96" cy="185" rx="20" ry="24" fill="#C8DBC8"/>
+      <ellipse cx="96" cy="152" rx="18" ry="16" fill="#C8DBC8"/>
+      <ellipse cx="81" cy="136" rx="6" ry="8.5" fill="#C8DBC8"/>
+      <ellipse cx="81" cy="136" rx="3.5" ry="5.5" fill="#E0EDE0" opacity="0.8"/>
+      <ellipse cx="111" cy="136" rx="6" ry="8.5" fill="#C8DBC8"/>
+      <ellipse cx="111" cy="136" rx="3.5" ry="5.5" fill="#E0EDE0" opacity="0.8"/>
+      <ellipse cx="87" cy="149" rx="11" ry="11.5" fill="#FFFFFF"/>
+      <ellipse cx="87" cy="149" rx="8.5" ry="9" fill="#12251A"/>
+      <ellipse cx="87" cy="149" rx="5" ry="5.5" fill="#070D0A"/>
+      <circle cx="85" cy="147" r="1.8" fill="#FFFFFF" opacity="0.9"/>
+      <ellipse cx="105" cy="149" rx="11" ry="11.5" fill="#FFFFFF"/>
+      <ellipse cx="105" cy="149" rx="8.5" ry="9" fill="#12251A"/>
+      <ellipse cx="105" cy="149" rx="5" ry="5.5" fill="#070D0A"/>
+      <circle cx="103" cy="147" r="1.8" fill="#FFFFFF" opacity="0.9"/>
+      <ellipse cx="83" cy="206" rx="6" ry="4" fill="#B0C8B0"/>
+      <ellipse cx="109" cy="206" rx="6" ry="4" fill="#B0C8B0"/>
+      <circle cx="79" cy="209" r="2" fill="#B0C8B0"/>
+      <circle cx="84" cy="210" r="2" fill="#B0C8B0"/>
+      <circle cx="89" cy="209" r="2" fill="#B0C8B0"/>
+      <circle cx="105" cy="209" r="2" fill="#B0C8B0"/>
+      <circle cx="110" cy="210" r="2" fill="#B0C8B0"/>
+      <circle cx="115" cy="209" r="2" fill="#B0C8B0"/>
+      <path d="M108 200 Q145 210 143 192 Q141 175 126 180" fill="none" stroke="#B0C8B0" stroke-width="6" stroke-linecap="round"/>
+      <path d="M108 200 Q145 210 143 192 Q141 175 126 180" fill="none" stroke="#12251A" stroke-width="1.2" stroke-linecap="round" opacity="0.2"/>
+    </svg>
+    <div>
+      <div class="nav-logo-name">Galago</div>
+      <span class="nav-logo-sub">AI for NGOs</span>
+    </div>
   </a>
-  <a href="index.html" class="topbar-back">
-    ← Back to site
-  </a>
+  <div class="nav-right">
+    <span class="nav-pill">Case Study</span>
+    <a href="index.html" class="nav-back">← Back to site</a>
+  </div>
 </nav>
 
-<!-- SLIDE DOTS -->
+<!-- DOTS -->
 <div class="slide-dots" id="dots">
   <div class="dot active" onclick="goTo(0)"></div>
   <div class="dot" onclick="goTo(1)"></div>
@@ -343,279 +446,230 @@
 <!-- PROGRESS -->
 <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
 
-<!-- ══════════════════════════════════════════
-     SLIDE 1 CONTEXT
-══════════════════════════════════════════ -->
+<div class="slides-wrapper">
+
+<!-- ══ SLIDE 1 — HERO ══ -->
 <section class="slide s1" id="slide-0">
-  <div class="slide-inner">
-    <div class="s1-layout">
-      <div>
-        <div class="slide-num">01 / 04</div>
-        <div class="s1-kicker">The Foundation</div>
-        <h1 class="s1-title">A decade of impact.<br><em>Built on paper.</em></h1>
-        <p class="s1-body">The Gakundi Memorial Foundation has been identifying Kenya's most talented children from its most vulnerable communities since 2012 and funding their path through secondary school and beyond. 123 students. 47 schools. 8 counties. The mission was extraordinary. The tools were not.</p>
-        <div class="s1-stats">
-          <div class="s1-stat"><div class="s1-stat-n">123</div><div class="s1-stat-l">Active students</div></div>
-          <div class="s1-stat"><div class="s1-stat-n">12+</div><div class="s1-stat-l">Years operating</div></div>
-          <div class="s1-stat"><div class="s1-stat-n">4.25×</div><div class="s1-stat-l">National avg grades</div></div>
+  <div class="s1-bg-grid"></div>
+  <div class="s1-glow"></div>
+  <div class="s1-inner">
+    <div>
+      <div class="s1-tag">Digital Transformation Case Study</div>
+      <h1 class="s1-title">Gakundi Memorial Foundation</h1>
+      <p class="s1-body">How MyGalago's AI platform turns admin time into student support, enabling scalable impact for Kenya's brightest minds.</p>
+      <div class="s1-stats">
+        <div class="stat-card"><div class="stat-value">123</div><div class="stat-label">Active Students</div></div>
+        <div class="stat-card"><div class="stat-value">63%</div><div class="stat-label">Girls Supported</div></div>
+        <div class="stat-card"><div class="stat-value">47</div><div class="stat-label">Partner Schools</div></div>
+        <div class="stat-card"><div class="stat-value">4.25×</div><div class="stat-label">National Avg Grades</div></div>
+      </div>
+    </div>
+    <div class="s1-visual">
+      <div class="s1-card" style="padding:0;overflow:hidden;">
+        <img src="screenshots/dashboard.png" alt="GMF Dashboard" style="width:100%;display:block;border-radius:10px 10px 0 0;" />
+        <div style="padding:0.8rem 1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div class="s1-card-label">Live Platform · Admin Portal</div>
         </div>
       </div>
-      <div class="s1-visual">
-        <div class="foundation-card">
-          <div class="fc-logo-row">
-            <div class="fc-logo-dot">🇰🇪</div>
-            <div>
-              <div class="fc-logo-name">Gakundi Memorial Foundation</div>
-              <div class="fc-logo-sub">Educate · End Poverty</div>
-            </div>
-          </div>
-          <p class="fc-quote">"I want to raise my parents' background and help children who can't afford school."</p>
-          <div class="fc-cite">Felistar Waithera, GMF student · KCPE 317 · Ranked 3rd in her class</div>
-          <div class="fc-tags">
-            <span class="fc-tag">Scholarship foundation</span>
-            <span class="fc-tag">Kenya · 8 counties</span>
-            <span class="fc-tag">63% girls</span>
-            <span class="fc-tag">100% fee coverage</span>
-          </div>
+      <div class="s1-card">
+        <div class="s1-card-label">Student voice</div>
+        <div class="s1-card-quote">"I want to raise my parents' background and help children who cannot afford school."</div>
+        <div class="s1-card-author">Felistar Waithera, GMF student · KCPE 317 · Ranked 3rd in her class</div>
+        <div class="s1-badge-row">
+          <span class="s1-badge">Scholarship foundation</span>
+          <span class="s1-badge">Kenya · 8 counties</span>
+          <span class="s1-badge">100% fee coverage</span>
+          <span class="s1-badge">12+ years operating</span>
         </div>
       </div>
     </div>
   </div>
-  <div class="next-arrow" onclick="goTo(1)" style="color:rgba(240,237,230,0.5)">
-    Next
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </div>
+  <div class="s1-footer">Case Study · 2026 · Galago × GMF</div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SLIDE 2 THE BEFORE
-══════════════════════════════════════════ -->
+<!-- ══ SLIDE 2 — CHALLENGE ══ -->
 <section class="slide s2" id="slide-1">
-  <div class="slide-inner">
-    <div class="s2-layout">
-      <div>
-        <div class="slide-num" style="color:var(--red)">02 / 04</div>
-        <h2 class="s2-title">The <em>before</em>:<br>fragile by design</h2>
-        <p class="s2-body">For most of GMF's history, managing 123 students across 47 schools meant one thing: an overwhelming amount of manual work. Every hour spent on administration was an hour not spent on a student.</p>
-        <div class="chaos-list">
-          <div class="chaos-item">
-            <div class="chaos-icon">🗂️</div>
-            <div class="chaos-text"><h4>Files scattered across drives</h4><p>Student dossiers as PDFs across local hard drives and shared folders no naming convention, no search, no version control.</p></div>
-          </div>
-          <div class="chaos-item">
-            <div class="chaos-icon">📊</div>
-            <div class="chaos-text"><h4>Academic results in Excel</h4><p>Manually updated spreadsheets, prone to error, impossible to query across cohorts or years.</p></div>
-          </div>
-          <div class="chaos-item">
-            <div class="chaos-icon">📧</div>
-            <div class="chaos-text"><h4>Donor reports rebuilt every time</h4><p>Copy-pasting data, hunting for photos, rebuilding context from scratch for every sponsor update.</p></div>
-          </div>
-          <div class="chaos-item">
-            <div class="chaos-icon">🔎</div>
-            <div class="chaos-text"><h4>No early warning system</h4><p>A student missing school due to unpaid fees, like Simon Ngunjiri, could go unnoticed until it was too late to help.</p></div>
-          </div>
+  <div class="s2-inner">
+    <div>
+      <span class="slide-step">01. The Problem</span>
+      <div class="accent-bar"></div>
+      <h2 class="slide-title">Your team is spending<br><span>mission time on administration</span></h2>
+      <p class="slide-sub">Every scholarship foundation faces the same structural challenge. The work that matters — students, schools, sponsors — competes daily with the work that doesn't: filing, reporting, searching, rebuilding.</p>
+
+      <div class="pain-list">
+        <div class="pain-item">
+          <div class="pain-icon"><i class="fas fa-clock"></i></div>
+          <div class="pain-text"><strong>Sponsor reporting takes hours.</strong> Every update to a donor means hunting across folders, copying figures, reformatting photos. For 40+ sponsors, that is weeks of team time per year.</div>
         </div>
-      </div>
-
-      <div>
-        <div class="chaos-visual">
-          <div class="file-stack red">
-            <div class="fs-header">
-              <div class="fs-title">Student dossiers · 2024</div>
-              <span class="fs-badge danger">No structure</span>
-            </div>
-            <div class="fs-files">
-              <span class="fs-file">felistar_01_scan.pdf</span>
-              <span class="fs-file">lewis_results_final.pdf</span>
-              <span class="fs-file">IMG_20240312.jpg</span>
-              <span class="fs-file">valentine_COPY.xlsx</span>
-              <span class="fs-file">report_card_NEW.pdf</span>
-              <span class="fs-file">notes_march.docx</span>
-              <span class="fs-file">form3_results_v2_FINAL.xlsx</span>
-            </div>
-          </div>
-
-          <div class="file-stack amber">
-            <div class="fs-header">
-              <div class="fs-title">Academic tracking · Term 3</div>
-              <span class="fs-badge warn">Manual Excel</span>
-            </div>
-            <div class="fs-files">
-              <span class="fs-file">cohort_2024_v3.xlsx</span>
-              <span class="fs-file">cohort_2024_v3_FINAL.xlsx</span>
-              <span class="fs-file">cohort_2024_MARC.xlsx</span>
-              <span class="fs-file">cohort_backup_old.xlsx</span>
-            </div>
-          </div>
-
-          <div class="file-stack gray">
-            <div class="fs-header">
-              <div class="fs-title">Donor report · Cargill sponsor</div>
-              <span class="fs-badge neutral">Built from scratch</span>
-            </div>
-            <div class="fs-files">
-              <span class="fs-file">sponsor_update_draft.pptx</span>
-              <span class="fs-file">photos_selected/</span>
-              <span class="fs-file">data_copied_from_excel.txt</span>
-            </div>
-          </div>
-
-          <div class="time-cost">
-            <div class="tc-icon">⏱</div>
-            <div class="tc-label">Time to prepare one sponsor report</div>
-            <div class="tc-value">Half a day</div>
-          </div>
-          <div class="time-cost" style="background:rgba(212,131,26,0.06);border-color:rgba(212,131,26,0.15);">
-            <div class="tc-icon">😰</div>
-            <div class="tc-label">Students flagged at risk before crisis</div>
-            <div class="tc-value" style="color:var(--amber)">Almost none</div>
-          </div>
+        <div class="pain-item">
+          <div class="pain-icon"><i class="fas fa-eye-slash"></i></div>
+          <div class="pain-text"><strong>No early warning on students.</strong> A student missing school or dropping grades goes unnoticed until the term review. By then, the window to intervene has often closed.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-icon"><i class="fas fa-question-circle"></i></div>
+          <div class="pain-text"><strong>The programme is hard to explain.</strong> When a foundation board, a funder, or a new partner asks "how are your students doing?", the answer requires assembling data from multiple places.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-icon"><i class="fas fa-user-slash"></i></div>
+          <div class="pain-text"><strong>Knowledge lives in people, not systems.</strong> When a key team member leaves, they take institutional memory with them. Student history, sponsor context, school relationships: all at risk.</div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="next-arrow" onclick="goTo(2)">
-    Next
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+    <div>
+      <!-- Cost cards — language for a board -->
+      <div class="chaos-visual">
+
+        <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:12px;padding:1.4rem 1.6rem;margin-bottom:10px;">
+          <div style="font-family:var(--font-d);font-size:0.65rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#ef4444;margin-bottom:1rem;">What it costs</div>
+          <div style="display:flex;flex-direction:column;gap:0.9rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:0.9rem;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <span style="font-size:0.88rem;color:rgba(255,255,255,0.6);">Time per sponsor report</span>
+              <span style="font-family:var(--font-g);font-size:1.1rem;font-weight:700;color:#ef4444;">½ day</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:0.9rem;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <span style="font-size:0.88rem;color:rgba(255,255,255,0.6);">Time to find a student's history</span>
+              <span style="font-family:var(--font-g);font-size:1.1rem;font-weight:700;color:#ef4444;">20+ minutes</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:0.9rem;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <span style="font-size:0.88rem;color:rgba(255,255,255,0.6);">Programme overview: how often available</span>
+              <span style="font-family:var(--font-g);font-size:1.1rem;font-weight:700;color:#f59e0b;">Quarterly</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:0.88rem;color:rgba(255,255,255,0.6);">At-risk students flagged before crisis</span>
+              <span style="font-family:var(--font-g);font-size:1.1rem;font-weight:700;color:#ef4444;">Almost none</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote-box">
+          <div class="quote-text">"Every hour spent managing files was an hour not spent talking to a student, visiting a school, or building a relationship with a sponsor."</div>
+          <div class="quote-author">Gakundi Memorial Foundation · 12 years of experience</div>
+        </div>
+
+        <div style="background:rgba(0,212,221,0.05);border:1px solid rgba(0,212,221,0.12);border-radius:10px;padding:1.2rem 1.4rem;margin-top:10px;">
+          <div style="font-family:var(--font-d);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:0.5rem;">The real question</div>
+          <div style="font-size:0.9rem;line-height:1.65;color:rgba(255,255,255,0.65);">How much of your team's capacity is being absorbed by administration that technology could handle automatically?</div>
+        </div>
+
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SLIDE 3 THE AFTER
-══════════════════════════════════════════ -->
+<!-- ══ SLIDE 3 — SOLUTION ══ -->
 <section class="slide s3" id="slide-2">
-  <div class="slide-inner">
-    <div class="s3-layout">
-      <div>
-        <div class="slide-num">03 / 04</div>
-        <h2 class="s3-title">The <em>after</em>:<br>a living platform</h2>
-        <p class="s3-body">Galago built a purpose-designed web application around GMF's actual rhythms: from initial student selection through four years of secondary school and beyond. Every feature replaced a specific manual process.</p>
-        <div class="platform-cards">
-          <div class="pcard">
-            <div class="pcard-icon">📊</div>
-            <div class="pcard-content">
-              <h4>Live Impact Dashboard</h4>
-              <p>All 123 students, grade distribution, gender breakdown, school coverage: recalculated in real time. Always current.</p>
-              <span class="pcard-pill">Replaces: weekly check-in emails</span>
-            </div>
-          </div>
-          <div class="pcard">
-            <div class="pcard-icon">🎓</div>
-            <div class="pcard-content">
-              <h4>Student Profiles & Digital Dossiers</h4>
-              <p>Every student's full history in one click: family background, primary results, every report card, photos, mentor notes.</p>
-              <span class="pcard-pill">Replaces: scattered PDFs & drives</span>
-            </div>
-          </div>
-          <div class="pcard">
-            <div class="pcard-icon">🤖</div>
-            <div class="pcard-content">
-              <h4>AI Performance Analysis</h4>
-              <p>The platform reads academic data and flags students who may be struggling before it becomes a crisis.</p>
-              <span class="pcard-pill">Replaces: reactive spreadsheet review</span>
-            </div>
-          </div>
-          <div class="pcard">
-            <div class="pcard-icon">🔗</div>
-            <div class="pcard-content">
-              <h4>Living Partnership Deck</h4>
-              <p>A full-screen presentation that pulls from live data. Share a link: real students, real results, always up to date.</p>
-              <span class="pcard-pill">Replaces: rebuilt PowerPoints</span>
-            </div>
-          </div>
+  <div class="s3-bg"></div>
+  <div class="s3-inner">
+    <div>
+      <span class="slide-step">02. Solution</span>
+      <div class="accent-bar"></div>
+      <h2 class="slide-title">The Platform: <span>AI-Powered Tools</span></h2>
+      <p class="slide-sub">A purpose-built system that centralises student data, automates reporting, and surfaces actionable insights.</p>
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="fi-icon"><i class="fas fa-chart-line"></i></div>
+          <div class="fi-text"><h3>Live Impact Dashboard</h3><p>All key metrics updated in real-time. Grades, gender balance, school coverage. No manual refresh required.</p></div>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon"><i class="fas fa-id-card"></i></div>
+          <div class="fi-text"><h3>Complete Digital Profiles</h3><p>Full student history from dossier to report cards, accessible in one click from any device.</p></div>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon"><i class="fas fa-brain"></i></div>
+          <div class="fi-text"><h3>AI Performance Analysis</h3><p>Automated insights that flag at-risk students early and identify high-performers for opportunities.</p></div>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon"><i class="fas fa-share-alt"></i></div>
+          <div class="fi-text"><h3>Living Partnership Deck</h3><p>Always-current online presentation for sponsors. Share impact stories with a single link.</p></div>
         </div>
       </div>
-
-      <div>
-        <div class="ba-cards">
-
-          <div class="ba-card">
-            <div class="ba-task-label">Preparing a sponsor report</div>
-            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">½ day</div></div>
-            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">5 min</div></div>
-          </div>
-
-          <div class="ba-card">
-            <div class="ba-task-label">Finding a student's full history</div>
-            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Folder search</div></div>
-            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">1 click</div></div>
-          </div>
-
-          <div class="ba-card">
-            <div class="ba-task-label">Programme performance overview</div>
-            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Manual Excel</div></div>
-            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">Always live</div></div>
-          </div>
-
-          <div class="ba-card">
-            <div class="ba-task-label">Identifying a student at risk</div>
-            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Too late</div></div>
-            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">AI flags early</div></div>
-          </div>
-
-          <div class="ba-card">
-            <div class="ba-task-label">Sharing impact with a new sponsor</div>
-            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Days of work</div></div>
-            <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">Share a link</div></div>
-          </div>
-
+    </div>
+    <div>
+      <div class="screenshots-grid">
+        <div class="screenshot-card">
+          <img class="sc-img" src="screenshots/dashboard.png" alt="Live Impact Dashboard" />
+          <div class="sc-label">Live Impact Dashboard</div>
+        </div>
+        <div class="screenshot-card">
+          <img class="sc-img" src="screenshots/profile.png" alt="Student Digital Dossier" />
+          <div class="sc-label">Student Digital Dossier</div>
+        </div>
+        <div class="screenshot-card">
+          <img class="sc-img" src="screenshots/analytics.png" alt="AI Performance Analytics" />
+          <div class="sc-label">AI Performance Analytics</div>
+        </div>
+        <div class="screenshot-card">
+          <img class="sc-img" src="screenshots/student.png" alt="Academic Tracking" />
+          <div class="sc-label">Academic Tracking</div>
         </div>
       </div>
     </div>
   </div>
-  <div class="next-arrow" onclick="goTo(3)">
-    Next
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SLIDE 4 IMPACT + CTA
-══════════════════════════════════════════ -->
+<!-- ══ SLIDE 4 — IMPACT ══ -->
 <section class="slide s4" id="slide-3">
-  <div class="slide-inner">
-    <div class="s4-layout">
-      <div>
-        <div class="slide-num">04 / 04</div>
-        <h2 class="s4-title">The result:<br><em>time back for<br>what matters</em></h2>
-        <p class="s4-body">Technology at its best is invisible. It quietly handles the work that doesn't need human attention, so that human attention can go where it's irreplaceable.</p>
-        <div class="outcome-list">
-          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>Hours recovered</strong> from administration flow back into visiting students, mentoring candidates, and building sponsor relationships.</div></div>
-          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>Patterns invisible on paper,</strong> like which schools perform best and which students need support, are now immediately visible and actionable.</div></div>
-          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>A professional, living presence</strong> for donors: real students with real stories and real results, always current.</div></div>
-          <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text"><strong>The same platform</strong> can be deployed for other scholarship foundations shared infrastructure, shared improvement, more students served.</div></div>
-        </div>
-      </div>
+  <div class="s4-glow1"></div>
+  <div class="s4-glow2"></div>
+  <div class="s4-inner">
+    <div class="s4-header">
+      <span class="slide-step" style="display:block;text-align:center;">03. Impact</span>
+      <div class="accent-bar"></div>
+      <h2 class="slide-title">The Impact: <span>Hours Reclaimed</span></h2>
+      <p class="slide-sub" style="text-align:center;margin:0 auto;max-width:600px;">By automating administration, we didn't just save time. We redirected it to where it matters most.</p>
+    </div>
 
-      <div style="display:flex;flex-direction:column;gap:1.5rem;">
-        <div class="impact-grid">
-          <div class="ig-cell"><div class="ig-num">–95%</div><div class="ig-label">Time to prepare a sponsor report</div></div>
-          <div class="ig-cell"><div class="ig-num">1 click</div><div class="ig-label">To access any student's full history</div></div>
-          <div class="ig-cell"><div class="ig-num">Early</div><div class="ig-label">AI flags students at risk before crisis</div></div>
-          <div class="ig-cell"><div class="ig-num">Always</div><div class="ig-label">Live dashboard, no manual refresh needed</div></div>
-        </div>
+    <table class="comparison-table">
+      <tbody>
+        <tr class="comp-row">
+          <td class="comp-cell"><div class="comp-task"><i class="far fa-file-alt"></i> Sponsor Report Prep</div></td>
+          <td class="comp-cell"><div class="comp-before"><span class="tag-before">Before</span> Half a day per report</div></td>
+          <td class="comp-cell"><div class="comp-after"><span class="tag-after">After</span> 5 Minutes</div></td>
+        </tr>
+        <tr class="comp-row">
+          <td class="comp-cell"><div class="comp-task"><i class="far fa-folder-open"></i> Student History Search</div></td>
+          <td class="comp-cell"><div class="comp-before"><span class="tag-before">Before</span> Manual folder hunt</div></td>
+          <td class="comp-cell"><div class="comp-after"><span class="tag-after">After</span> 1 Click Access</div></td>
+        </tr>
+        <tr class="comp-row">
+          <td class="comp-cell"><div class="comp-task"><i class="fas fa-chart-pie"></i> Program Performance</div></td>
+          <td class="comp-cell"><div class="comp-before"><span class="tag-before">Before</span> Static Excel sheet</div></td>
+          <td class="comp-cell"><div class="comp-after"><span class="tag-after">After</span> Always Live</div></td>
+        </tr>
+        <tr class="comp-row">
+          <td class="comp-cell"><div class="comp-task"><i class="fas fa-exclamation-circle"></i> Identifying At-Risk Students</div></td>
+          <td class="comp-cell"><div class="comp-before"><span class="tag-before">Before</span> Often too late</div></td>
+          <td class="comp-cell"><div class="comp-after"><span class="tag-after">After</span> AI Flags Early</div></td>
+        </tr>
+        <tr class="comp-row">
+          <td class="comp-cell"><div class="comp-task"><i class="fas fa-handshake"></i> Sharing Impact with Sponsors</div></td>
+          <td class="comp-cell"><div class="comp-before"><span class="tag-before">Before</span> Days of work</div></td>
+          <td class="comp-cell"><div class="comp-after"><span class="tag-after">After</span> Share a Link</div></td>
+        </tr>
+      </tbody>
+    </table>
 
-        <div style="background:rgba(46,204,113,0.06);border:1px solid rgba(46,204,113,0.12);border-radius:10px;padding:1.3rem;">
-          <p style="font-family:var(--font-d);font-style:italic;font-size:0.9rem;line-height:1.65;color:rgba(240,237,230,0.75);margin-bottom:0.7rem;">"GMF didn't just pay my fees. They changed the way I see myself."</p>
-          <div style="font-size:0.68rem;color:var(--em2);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">GMF student, Form 4 graduate 2024</div>
-        </div>
-      </div>
+    <div class="s4-metrics">
+      <div class="metric-card"><div class="metric-num">95%</div><div class="metric-lbl">Less time on sponsor reports</div></div>
+      <div class="metric-card"><div class="metric-num">1 click</div><div class="metric-lbl">To access any student's full history</div></div>
+      <div class="metric-card"><div class="metric-num">Early</div><div class="metric-lbl">AI flags students at risk before crisis</div></div>
+      <div class="metric-card"><div class="metric-num">Always</div><div class="metric-lbl">Live dashboard, no manual refresh</div></div>
+    </div>
 
-      <div class="s4-cta-row">
-        <p class="s4-cta-text">Your foundation has the same potential. The platform is ready.</p>
-        <div class="s4-btn-row">
-          <a href="index.html#contact" class="btn-em">Talk to Galago →</a>
-          <a href="index.html" class="btn-outline">Back to site</a>
-        </div>
-      </div>
+    <div class="s4-quote-row">
+      <div class="s4-quote-text">"GMF didn't just pay my fees. They changed the way I see myself."</div>
+      <div class="s4-quote-cite">GMF student, Form 4 graduate 2024</div>
+    </div>
+
+    <div class="s4-cta">
+      <a href="index.html#contact" class="btn-cta" onclick="if(window.opener||window.parent!==window){}else{window.location='index.html';setTimeout(()=>window.openModal&&window.openModal(),500);return false;}">Talk to Galago →</a>
+      <a href="index.html" class="btn-outline-dark">Back to site</a>
     </div>
   </div>
 </section>
+
+</div><!-- end slides-wrapper -->
 
 <script>
   const slides = document.querySelectorAll('.slide');
@@ -628,7 +682,6 @@
     slides[i].scrollIntoView({ behavior: 'smooth' });
   }
 
-  // update dots + progress on scroll
   const slideObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
@@ -641,7 +694,6 @@
 
   slides.forEach(s => slideObs.observe(s));
 
-  // keyboard nav
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') goTo(current + 1);
     if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  goTo(current - 1);
