@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Galago · AI for Foundations and NGOs</title>
-  <meta name="description" content="We build AI-powered platforms for foundations and NGOs so your team spends less time on administration and more time on impact." />
+  <title>Galago · AI Consulting</title>
+  <meta name="description" content="We build AI-powered products and help organisations use AI well. Boutique AI consulting for teams that want results, not PowerPoints." />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="shortcut icon" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -92,7 +92,6 @@
       pointer-events: none;
     }
 
-    /* Big logo icon in hero */
     .hero-logo-icon {
       width: 140px; height: 140px;
       position: relative; z-index: 2;
@@ -183,33 +182,37 @@
     .body-text { font-size: 1rem; line-height: 1.8; color: var(--ink2); max-width: 600px; }
     .body-text.light { color: rgba(240,237,230,0.68); }
 
-    /* PROBLEM */
-    .problem { background: var(--cream2); }
-    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-    .problem-cards { display: flex; flex-direction: column; gap: 2px; }
-    .problem-card { background: var(--cream); padding: 1.4rem 1.7rem; border-left: 2px solid var(--cream3); transition: border-color 0.25s; }
-    .problem-card:hover { border-color: var(--emerald); }
-    .problem-card-icon { width: 30px; height: 30px; background: rgba(26,158,74,0.08); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; margin-bottom: 0.8rem; }
-    .problem-card h3 { font-family: var(--font-d); font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem; }
-    .problem-card p { font-size: 0.83rem; line-height: 1.65; color: var(--ink3); }
+    /* SERVICES */
+    .services { background: var(--cream2); }
+    .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 4rem; }
+    .svc-card { padding: 2.4rem; border: 1.5px solid var(--cream3); border-radius: 14px; background: var(--cream); transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; position: relative; }
+    .svc-card:hover { border-color: var(--emerald); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(10,21,13,0.07); }
+    .svc-card.featured { border-color: var(--emerald); background: #fff; }
+    .svc-badge { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: var(--emerald); color: #fff; font-family: var(--font-d); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.22rem 0.9rem; border-radius: 0 0 100px 100px; white-space: nowrap; }
+    .svc-icon { font-size: 1.5rem; margin-bottom: 1.2rem; display: block; }
+    .svc-name { font-family: var(--font-d); font-size: 1.35rem; font-weight: 800; color: var(--ink); margin-bottom: 0.25rem; letter-spacing: -0.02em; }
+    .svc-tagline { font-family: var(--font-d); font-size: 0.78rem; color: var(--emerald); font-weight: 600; margin-bottom: 1.2rem; }
+    .svc-desc { font-size: 0.84rem; line-height: 1.7; color: var(--ink3); margin-bottom: 1.6rem; }
+    .svc-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .svc-list li { font-size: 0.81rem; color: var(--ink2); display: flex; gap: 0.6rem; align-items: flex-start; }
+    .svc-list li::before { content:'→'; color: var(--emerald); flex-shrink: 0; font-size: 0.7rem; margin-top: 0.12rem; }
 
-    /* CASE STUDY */
-    .case-study { background: var(--forest); position: relative; overflow: hidden; }
-    .case-study::before { content:''; position:absolute; top:0; right:0; width:55%; height:100%; background:radial-gradient(ellipse at 80% 50%, rgba(46,204,113,0.07) 0%, transparent 70%); pointer-events:none; }
-    .case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
-    .case-tag { display: inline-block; font-family: var(--font-d); font-size: 0.67rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; background: rgba(46,204,113,0.1); color: var(--em2); padding: 0.26rem 0.8rem; border-radius: 100px; border: 1px solid rgba(46,204,113,0.2); margin-bottom: 1.5rem; }
-    .case-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 2.5rem; background: rgba(46,204,113,0.08); border: 1px solid rgba(46,204,113,0.12); border-radius: 10px; overflow: hidden; }
-    .case-stat { padding: 1.3rem; background: rgba(13,26,18,0.8); }
-    .case-stat-num { font-family: var(--font-d); font-size: 1.9rem; font-weight: 800; color: var(--em2); line-height: 1; margin-bottom: 0.25rem; letter-spacing: -0.02em; }
-    .case-stat-label { font-family: var(--font-d); font-size: 0.7rem; color: rgba(200,217,200,0.5); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
-    .case-features { display: flex; flex-direction: column; gap: 1.5rem; }
-    .case-feature { display: flex; gap: 1rem; align-items: flex-start; }
-    .case-feature-icon { flex-shrink: 0; width: 32px; height: 32px; background: rgba(46,204,113,0.08); border: 1px solid rgba(46,204,113,0.14); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.88rem; }
-    .case-feature-text h4 { font-family: var(--font-d); font-size: 0.9rem; font-weight: 700; color: var(--cream); margin-bottom: 0.18rem; }
-    .case-feature-text p { font-size: 0.82rem; line-height: 1.65; color: rgba(200,217,200,0.55); }
-    .case-quote { margin-top: 2.5rem; padding: 1.5rem; background: rgba(46,204,113,0.05); border: 1px solid rgba(46,204,113,0.1); border-radius: 10px; }
-    .case-quote p { font-family: var(--font-d); font-style: italic; font-size: 0.98rem; line-height: 1.65; color: rgba(237,230,214,0.85); margin-bottom: 0.8rem; font-weight: 400; }
-    .case-quote cite { font-family: var(--font-d); font-size: 0.7rem; color: var(--em2); font-style: normal; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+    /* PAMOJA SECTION */
+    .pamoja { background: var(--forest); position: relative; overflow: hidden; }
+    .pamoja::before { content:''; position:absolute; top:0; right:0; width:55%; height:100%; background:radial-gradient(ellipse at 80% 50%, rgba(46,204,113,0.07) 0%, transparent 70%); pointer-events:none; }
+    .pamoja-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+    .pamoja-tag { display: inline-block; font-family: var(--font-d); font-size: 0.67rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; background: rgba(46,204,113,0.1); color: var(--em2); padding: 0.26rem 0.8rem; border-radius: 100px; border: 1px solid rgba(46,204,113,0.2); margin-bottom: 1.5rem; }
+    .pamoja-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 2.5rem; background: rgba(46,204,113,0.08); border: 1px solid rgba(46,204,113,0.12); border-radius: 10px; overflow: hidden; }
+    .pamoja-stat { padding: 1.3rem; background: rgba(13,26,18,0.8); }
+    .pamoja-stat-num { font-family: var(--font-d); font-size: 1.9rem; font-weight: 800; color: var(--em2); line-height: 1; margin-bottom: 0.25rem; letter-spacing: -0.02em; }
+    .pamoja-stat-label { font-family: var(--font-d); font-size: 0.7rem; color: rgba(200,217,200,0.5); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
+    .pamoja-features { display: flex; flex-direction: column; gap: 1.5rem; }
+    .pamoja-feature { display: flex; gap: 1rem; align-items: flex-start; }
+    .pamoja-feature-icon { flex-shrink: 0; width: 32px; height: 32px; background: rgba(46,204,113,0.08); border: 1px solid rgba(46,204,113,0.14); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.88rem; }
+    .pamoja-feature-text h4 { font-family: var(--font-d); font-size: 0.9rem; font-weight: 700; color: var(--cream); margin-bottom: 0.18rem; }
+    .pamoja-feature-text p { font-size: 0.82rem; line-height: 1.65; color: rgba(200,217,200,0.55); }
+    .pamoja-cta-link { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem; padding: 0.8rem 1.8rem; background: rgba(46,204,113,0.12); border: 1.5px solid rgba(46,204,113,0.3); border-radius: 100px; color: var(--em2); font-family: var(--font-d); font-size: 0.88rem; font-weight: 700; text-decoration: none; transition: background 0.2s, border-color 0.2s; }
+    .pamoja-cta-link:hover { background: rgba(46,204,113,0.2); border-color: var(--em2); }
 
     /* HOW */
     .how { background: var(--cream); }
@@ -221,24 +224,9 @@
     .how-step h3 { font-family: var(--font-d); font-size: 1.15rem; font-weight: 700; color: var(--ink); margin-bottom: 0.65rem; letter-spacing: -0.02em; }
     .how-step p { font-size: 0.84rem; line-height: 1.7; color: var(--ink3); }
 
-    /* OFFER */
-    .offer { background: var(--cream2); }
-    .offer-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 4rem; }
-    .offer-card { padding: 2.2rem; border: 1.5px solid var(--cream3); border-radius: 14px; background: var(--cream); transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; position: relative; }
-    .offer-card:hover { border-color: var(--emerald); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(10,21,13,0.07); }
-    .offer-card.featured { border-color: var(--emerald); background: #fff; }
-    .offer-badge { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: var(--emerald); color: #fff; font-family: var(--font-d); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.22rem 0.9rem; border-radius: 0 0 100px 100px; }
-    .offer-icon { font-size: 1.5rem; margin-bottom: 1.2rem; display: block; }
-    .offer-name { font-family: var(--font-d); font-size: 1.35rem; font-weight: 800; color: var(--ink); margin-bottom: 0.25rem; letter-spacing: -0.02em; }
-    .offer-tagline { font-family: var(--font-d); font-size: 0.78rem; color: var(--emerald); font-weight: 600; margin-bottom: 1.2rem; }
-    .offer-desc { font-size: 0.84rem; line-height: 1.7; color: var(--ink3); margin-bottom: 1.6rem; }
-    .offer-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-    .offer-list li { font-size: 0.81rem; color: var(--ink2); display: flex; gap: 0.6rem; align-items: flex-start; }
-    .offer-list li::before { content:'→'; color: var(--emerald); flex-shrink: 0; font-size: 0.7rem; margin-top: 0.12rem; }
-
     /* WHY */
-    .why { background: var(--cream); }
-    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .why { background: var(--cream2); }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
     .why-points { display: flex; flex-direction: column; margin-top: 2rem; }
     .why-point { display: flex; gap: 1.2rem; padding-bottom: 1.8rem; }
     .why-point-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
@@ -248,7 +236,7 @@
     .why-point-content h4 { font-family: var(--font-d); font-size: 0.96rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem; }
     .why-point-content p { font-size: 0.84rem; line-height: 1.7; color: var(--ink3); }
 
-    /* BEFORE / AFTER cards */
+    /* BA cards */
     .before-after { display: flex; flex-direction: column; gap: 8px; }
     .ba-card { display: grid; grid-template-columns: 1fr 28px 1fr; background: var(--cream); border: 1.5px solid var(--cream3); border-radius: 12px; overflow: hidden; }
     .ba-task-label { grid-column: 1 / -1; font-family: var(--font-d); font-size: 0.76rem; font-weight: 500; color: var(--ink3); padding: 10px 14px 0; }
@@ -335,7 +323,6 @@
     }
 
     .form-row { display: flex; flex-direction: column; gap: 0.9rem; }
-
     .form-field { display: flex; flex-direction: column; gap: 0.35rem; }
     .form-field label {
       font-family: var(--font-d); font-size: 0.72rem; font-weight: 600;
@@ -359,7 +346,6 @@
       box-shadow: 0 0 0 3px rgba(26,158,74,0.1);
     }
     .form-field textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
-
     .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
 
     .btn-submit {
@@ -379,7 +365,6 @@
       margin-top: 0.8rem; line-height: 1.5;
     }
 
-    /* success state */
     .modal-success {
       display: none; flex-direction: column; align-items: center;
       text-align: center; padding: 1rem 0;
@@ -400,9 +385,9 @@
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
-      .problem-grid, .case-grid, .why-grid, .how-header { grid-template-columns: 1fr; gap: 2.5rem; }
-      .how-steps, .offer-grid { grid-template-columns: 1fr; }
-      .case-stats { grid-template-columns: 1fr 1fr; }
+      .pamoja-grid, .why-grid, .how-header { grid-template-columns: 1fr; gap: 2.5rem; }
+      .how-steps, .services-grid { grid-template-columns: 1fr; }
+      .pamoja-stats { grid-template-columns: 1fr 1fr; }
       .hero-logo-icon { width: 100px; height: 100px; }
     }
     @media (max-width: 600px) {
@@ -444,13 +429,13 @@
     </svg>
     <div class="nav-logo-text">
       <span class="nav-logo-name">Galago</span>
-      <span class="nav-logo-sub">AI for NGOs</span>
+      <span class="nav-logo-sub">AI Consulting</span>
     </div>
   </a>
   <ul class="nav-links">
-    <li><a href="#problem">The Problem</a></li>
-    <li><a href="#case">Case Study</a></li>
-    <li><a href="#offer">Services</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pamoja">Our Work</a></li>
+    <li><a href="#how">How We Work</a></li>
     <li><a href="#" class="nav-cta" onclick="openModal();return false;">Let's Talk</a></li>
   </ul>
 </nav>
@@ -460,7 +445,6 @@
   <div class="hero-glow"></div>
   <div class="hero-grid"></div>
 
-  <!-- Big logo icon, centered, light variant -->
   <svg class="hero-logo-icon" viewBox="40 118 115 100" xmlns="http://www.w3.org/2000/svg">
     <ellipse cx="96" cy="185" rx="20" ry="24" fill="#C8DBC8"/>
     <ellipse cx="96" cy="152" rx="18" ry="16" fill="#C8DBC8"/>
@@ -488,11 +472,11 @@
     <path d="M108 200 Q145 210 143 192 Q141 175 126 180" fill="none" stroke="#12251A" stroke-width="1.5" stroke-linecap="round" opacity="0.18"/>
   </svg>
 
-  <p class="hero-eyebrow">AI · Foundations · NGOs</p>
-  <h1>AI that works as hard<br>as <em>your mission</em></h1>
-  <p class="hero-sub">We build AI-powered platforms for foundations and NGOs so your team spends less time on administration and more time on the people you exist to serve.</p>
+  <p class="hero-eyebrow">AI Products · Workflow Automation · Team Training</p>
+  <h1>We build AI products.<br>We help <em>teams use them.</em></h1>
+  <p class="hero-sub">Galago is a boutique AI consultancy. We design and ship AI-powered tools, and we train organisations to get real value from AI — without the hype, without the long engagements.</p>
   <div class="hero-actions">
-    <a href="gmf-story.html" class="btn-primary">See it in action →</a>
+    <a href="#pamoja" class="btn-primary">See our work →</a>
     <a href="#" class="btn-ghost" onclick="openModal();return false;">Get in touch</a>
   </div>
   <div class="hero-scroll-hint">
@@ -503,79 +487,89 @@
 
 <!-- BANNER -->
 <div class="case-banner">
-  <span>Working with</span>
+  <span>We work with</span>
   <div class="case-pills">
-    <span class="pill">Scholarship Foundations</span>
-    <span class="pill">Education NGOs</span>
-    <span class="pill">Community Programmes</span>
-    <span class="pill">Social Impact Organisations</span>
+    <span class="pill">Impact Organisations</span>
+    <span class="pill">Foundations &amp; NGOs</span>
+    <span class="pill">Professional Services</span>
+    <span class="pill">Scale-ups &amp; Teams</span>
   </div>
 </div>
 
-<!-- PROBLEM -->
-<section class="problem" id="problem">
+<!-- SERVICES -->
+<section class="services" id="services">
   <div class="inner">
-    <div class="problem-grid">
-      <div>
-        <span class="label reveal">The Reality</span>
-        <h2 class="reveal">Foundations run on passion.<br><em>Not on paper.</em></h2>
-        <p class="body-text reveal">Most NGOs and foundations are doing extraordinary work with tools designed for ordinary office tasks. The result: your best people spend their days managing spreadsheets instead of changing lives.</p>
-        <p class="body-text reveal" style="margin-top:1.2rem;">AI changes that equation permanently. Not with hype, but with practical tools built around the specific rhythms of your organisation.</p>
-      </div>
-      <div class="problem-cards">
-        <div class="problem-card reveal">
-          <div class="problem-card-icon">🗂️</div>
-          <h3>Files scattered everywhere</h3>
-          <p>Records, reports, and data spread across drives, emails, and folders. No single source of truth, no search, no version control.</p>
-        </div>
-        <div class="problem-card reveal d1">
-          <div class="problem-card-icon">⏱️</div>
-          <h3>Hours lost to reporting</h3>
-          <p>Preparing a donor update means hunting for photos, copying figures, and rebuilding context every single time.</p>
-        </div>
-        <div class="problem-card reveal d2">
-          <div class="problem-card-icon">🔍</div>
-          <h3>No visibility on what's working</h3>
-          <p>Paper systems produce data but not insight. Which beneficiaries need attention? The answers are buried, or invisible.</p>
-        </div>
-        <div class="problem-card reveal d3">
-          <div class="problem-card-icon">🤝</div>
-          <h3>Partners expect more</h3>
-          <p>Corporate sponsors increasingly expect real-time data and transparent impact metrics. PDFs by email no longer cut it.</p>
+    <span class="label reveal">What We Do</span>
+    <h2 class="reveal">Two ways to work <em>together</em></h2>
+    <p class="body-text reveal" style="margin-bottom:0;">Every engagement starts with a free discovery call. No commitment, no sales process.</p>
+    <div class="services-grid">
+
+      <div class="svc-card reveal">
+        <span class="svc-icon">⚡</span>
+        <div class="svc-name">AI Optimization</div>
+        <div class="svc-tagline">Get more from what your team already does</div>
+        <p class="svc-desc">Your team already uses email, documents, and spreadsheets. AI can make every one of those workflows faster and sharper. We audit how you work today and embed practical AI into it — no new system required.</p>
+        <ul class="svc-list">
+          <li>Workflow audit and opportunity mapping</li>
+          <li>Custom AI prompt libraries for your team</li>
+          <li>Hands-on workshops and training sessions</li>
+          <li>Reporting, communications, grant writing</li>
+          <li>Ongoing coaching as needs evolve</li>
+        </ul>
+        <div style="margin-top:1.8rem;">
+          <button onclick="openModal('optimization')" style="width:100%;background:var(--cream2);color:var(--ink);padding:0.75rem 1.5rem;border-radius:100px;font-family:var(--font-d);font-size:0.88rem;font-weight:700;border:1.5px solid var(--cream3);cursor:pointer;transition:background 0.2s,border-color 0.2s;">Book a discovery call</button>
         </div>
       </div>
+
+      <div class="svc-card featured reveal d1">
+        <div class="svc-badge">Ship something real</div>
+        <span class="svc-icon">🛠️</span>
+        <div class="svc-name">AI Product Build</div>
+        <div class="svc-tagline">A purpose-built AI platform for your organisation</div>
+        <p class="svc-desc">When off-the-shelf tools don't fit your reality, we build something that does. Custom AI-powered platforms, dashboards, and automation layers — designed around your specific workflows and shipped in weeks, not months.</p>
+        <ul class="svc-list">
+          <li>Discovery, scoping, and architecture design</li>
+          <li>Full-stack product development</li>
+          <li>AI integration: analysis, automation, reporting</li>
+          <li>Deployment, onboarding, and documentation</li>
+          <li>Ongoing support and iteration</li>
+        </ul>
+        <div style="margin-top:1.8rem;">
+          <button onclick="openModal('build')" style="width:100%;background:var(--ink);color:var(--cream);padding:0.75rem 1.5rem;border-radius:100px;font-family:var(--font-d);font-size:0.88rem;font-weight:700;border:none;cursor:pointer;transition:background 0.2s,transform 0.15s;">Request a scoping call</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- CASE STUDY -->
-<section class="case-study" id="case">
+<!-- PAMOJA -->
+<section class="pamoja" id="pamoja">
   <div class="inner">
-    <div class="case-grid">
+    <div class="pamoja-grid">
       <div>
-        <span class="case-tag reveal">Live Case Study</span>
-        <span class="label reveal">Gakundi Memorial Foundation</span>
-        <h2 class="light reveal">From spreadsheets to a<br><em>living platform</em></h2>
-        <p class="body-text light reveal">GMF has spent more than a decade sponsoring Kenya's most talented children from its most vulnerable communities. The mission was powerful. The infrastructure was fragile.</p>
-        <p class="body-text light reveal" style="margin-top:1rem;">We built a purpose-designed platform that centralises every student record, automates academic tracking, surfaces AI-powered insights, and generates a live partnership deck automatically.</p>
-        <div class="case-stats reveal">
-          <div class="case-stat"><div class="case-stat-num">123</div><div class="case-stat-label">Students tracked</div></div>
-          <div class="case-stat"><div class="case-stat-num">47</div><div class="case-stat-label">Partner schools</div></div>
-          <div class="case-stat"><div class="case-stat-num">4.25×</div><div class="case-stat-label">National avg grades</div></div>
-          <div class="case-stat"><div class="case-stat-num">63%</div><div class="case-stat-label">Girls supported</div></div>
+        <span class="pamoja-tag reveal">Our first product</span>
+        <span class="label reveal" style="color:rgba(200,217,200,0.5);">Pamoja · For Foundations &amp; NGOs</span>
+        <h2 class="light reveal">Managing a scholarship<br>programme? Meet <em>Pamoja.</em></h2>
+        <p class="body-text light reveal">Pamoja is the platform we built for education foundations that manage students, sponsors, and schools. It started as a custom build for Gakundi Memorial Foundation in Kenya — and we now offer it to any foundation ready to leave spreadsheets behind.</p>
+        <p class="body-text light reveal" style="margin-top:1rem;">From student dossiers and academic tracking to AI-powered analysis and auto-generated sponsor presentations — Pamoja does the administration so your team can focus on the people you serve.</p>
+        <div class="pamoja-stats reveal">
+          <div class="pamoja-stat"><div class="pamoja-stat-num">123</div><div class="pamoja-stat-label">Students tracked</div></div>
+          <div class="pamoja-stat"><div class="pamoja-stat-num">47</div><div class="pamoja-stat-label">Partner schools</div></div>
+          <div class="pamoja-stat"><div class="pamoja-stat-num">4.25×</div><div class="pamoja-stat-label">National avg grades</div></div>
+          <div class="pamoja-stat"><div class="pamoja-stat-num">63%</div><div class="pamoja-stat-label">Girls supported</div></div>
         </div>
-        <div class="case-quote reveal">
-          <p>"GMF didn't just pay my fees. They changed the way I see myself."</p>
-          <cite>GMF student, Form 4 graduate 2024</cite>
-        </div>
+        <a href="https://pamoja.ai" target="_blank" rel="noopener" class="pamoja-cta-link reveal">
+          Visit pamoja.ai →
+        </a>
       </div>
-      <div class="case-features">
-        <div class="case-feature reveal"><div class="case-feature-icon">📊</div><div class="case-feature-text"><h4>Live Impact Dashboard</h4><p>All KPIs recalculated in real time. Grade distribution, gender breakdown, school coverage. No manual refresh.</p></div></div>
-        <div class="case-feature reveal d1"><div class="case-feature-icon">🎓</div><div class="case-feature-text"><h4>Student Profiles and Digital Dossiers</h4><p>Every student's complete history in one click. Family background, results, every report card, photos, and mentor notes.</p></div></div>
-        <div class="case-feature reveal d2"><div class="case-feature-icon">🤖</div><div class="case-feature-text"><h4>AI Performance Analysis</h4><p>The platform reads academic data and surfaces insights. Who is improving, who may be struggling, which schools excel.</p></div></div>
-        <div class="case-feature reveal d3"><div class="case-feature-icon">🔗</div><div class="case-feature-text"><h4>Living Partnership Deck</h4><p>A full-screen, always-current presentation. Share a single link with real students, real stories, always up to date.</p></div></div>
-        <div class="case-feature reveal d4"><div class="case-feature-icon">🔒</div><div class="case-feature-text"><h4>Role-Based Access and Security</h4><p>Sensitive family data protected. Impact data visible to partners. GDPR principles from day one.</p></div></div>
-        <div class="case-feature reveal"><div class="case-feature-icon">📋</div><div class="case-feature-text"><h4>Annual Selection Workflow</h4><p>Dossier upload, interview notes, side-by-side comparison. Weeks of paper review become a clear, transparent decision.</p></div></div>
+      <div class="pamoja-features">
+        <div class="pamoja-feature reveal"><div class="pamoja-feature-icon">📊</div><div class="pamoja-feature-text"><h4>Live Impact Dashboard</h4><p>All KPIs recalculated in real time. Grade distribution, gender breakdown, school coverage. No manual refresh.</p></div></div>
+        <div class="pamoja-feature reveal d1"><div class="pamoja-feature-icon">🎓</div><div class="pamoja-feature-text"><h4>Student Profiles and Digital Dossiers</h4><p>Every student's complete history in one click. Family background, results, every report card, photos, and mentor notes.</p></div></div>
+        <div class="pamoja-feature reveal d2"><div class="pamoja-feature-icon">🤖</div><div class="pamoja-feature-text"><h4>AI Performance Analysis</h4><p>The platform reads academic data and surfaces insights. Who is improving, who may be struggling, which schools excel.</p></div></div>
+        <div class="pamoja-feature reveal d3"><div class="pamoja-feature-icon">🔗</div><div class="pamoja-feature-text"><h4>Auto-Generated Sponsor Deck</h4><p>A full-screen, always-current presentation. Share one link with real students, real stories, always up to date.</p></div></div>
+        <div class="pamoja-feature reveal d4"><div class="pamoja-feature-icon">📬</div><div class="pamoja-feature-text"><h4>Communications Suite</h4><p>Email templates, event updates, and direct messaging to students, sponsors, and schools — all in one place.</p></div></div>
+        <div class="pamoja-feature reveal"><div class="pamoja-feature-icon">🔒</div><div class="pamoja-feature-text"><h4>Role-Based Access and Security</h4><p>Sensitive family data protected. Impact data visible to partners. GDPR principles from day one.</p></div></div>
       </div>
     </div>
   </div>
@@ -589,70 +583,24 @@
         <span class="label reveal">How We Work</span>
         <h2 class="reveal">Practical AI,<br><em>delivered fast</em></h2>
       </div>
-      <p class="body-text reveal">No 18-month consulting engagements. No bloated methodology decks. We deliver working tools your team can use from day one, then iterate fast.</p>
+      <p class="body-text reveal">No 18-month consulting engagements. No bloated methodology decks. We deliver working tools your team can use from day one, then iterate fast based on what you actually need.</p>
     </div>
     <div class="how-steps">
       <div class="how-step reveal">
         <div class="how-step-num">01</div>
         <h3>Understand your reality</h3>
-        <p>A deep audit of how your organisation actually works. Your workflows, your data, and the specific pain points costing you time and insight.</p>
+        <p>A focused audit of how your organisation actually works. Your workflows, your data, and the specific friction points that cost you time and clarity.</p>
       </div>
       <div class="how-step reveal d1">
         <div class="how-step-num">02</div>
         <h3>Build the right thing</h3>
-        <p>No off-the-shelf CRM adapted for charity use. Purpose-made tools: platforms, dashboards, AI analysis layers, built to fit your mission's rhythms.</p>
+        <p>No generic tools adapted for your sector. Purpose-built platforms, AI automation layers, and training programmes designed around your specific situation.</p>
       </div>
       <div class="how-step reveal d2">
         <div class="how-step-num">03</div>
         <h3>Deliver, train, and grow</h3>
-        <p>A working platform, full training, and documentation. Then we stay close, refining and extending as your needs evolve.</p>
+        <p>A working system, full team training, and clear documentation. Then we stay close — refining and extending as your needs evolve.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- OFFER -->
-<section class="offer" id="offer">
-  <div class="inner">
-    <span class="label reveal">Services</span>
-    <h2 class="reveal">Two ways to work <em>together</em></h2>
-    <div class="offer-grid" style="grid-template-columns: 1fr 1fr;">
-
-      <div class="offer-card reveal">
-        <span class="offer-icon">⚡</span>
-        <div class="offer-name">AI Optimization</div>
-        <div class="offer-tagline">Do more with the tools you already have</div>
-        <p class="offer-desc">Your team is already using email, spreadsheets, and documents. AI can make every one of those workflows faster, sharper, and less draining. We audit what you do today and build practical AI into it — no new system required.</p>
-        <ul class="offer-list">
-          <li>Audit of your current workflows and pain points</li>
-          <li>AI prompt libraries tailored to your team</li>
-          <li>Hands-on workshops and training sessions</li>
-          <li>Donor reporting, grant writing, communications</li>
-          <li>Ongoing coaching as your needs evolve</li>
-        </ul>
-        <div style="margin-top:1.8rem;">
-          <button onclick="openModal('optimization')" style="width:100%;background:var(--cream2);color:var(--ink);padding:0.75rem 1.5rem;border-radius:100px;font-family:var(--font-d);font-size:0.88rem;font-weight:700;border:1.5px solid var(--cream3);cursor:pointer;transition:background 0.2s,border-color 0.2s;">Book a discovery call</button>
-        </div>
-      </div>
-
-      <div class="offer-card featured reveal d1">
-        <div class="offer-badge">Recommended for NGOs</div>
-        <span class="offer-icon">🌍</span>
-        <div class="offer-name">AI for NGOs</div>
-        <div class="offer-tagline">A dedicated platform built for your foundation</div>
-        <p class="offer-desc">Your own instance of the platform we built for Gakundi Memorial Foundation. Configured for your students, your schools, your sponsors. Deployed in weeks, not months. Your team gets a living system — we handle the technology.</p>
-        <ul class="offer-list">
-          <li>Dedicated platform instance, your branding</li>
-          <li>Student profiles, academic tracking, AI analysis</li>
-          <li>Live donor dashboard and partnership deck</li>
-          <li>Annual selection workflow and dossier management</li>
-          <li>Deployment project + annual licence</li>
-        </ul>
-        <div style="margin-top:1.8rem;">
-          <button onclick="openModal('ngos')" style="width:100%;background:var(--ink);color:var(--cream);padding:0.75rem 1.5rem;border-radius:100px;font-family:var(--font-d);font-size:0.88rem;font-weight:700;border:none;cursor:pointer;transition:background 0.2s,transform 0.15s;">Request a demo</button>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -667,7 +615,7 @@
         <div class="why-points">
           <div class="why-point reveal">
             <div class="why-point-line"><div class="why-dot"></div><div class="why-connector"></div></div>
-            <div class="why-point-content"><h4>Built for mission-driven organisations</h4><p>We understand the constraints of foundations and NGOs. Limited budgets, volunteer teams, donor accountability, and the irreplaceable human work at the centre.</p></div>
+            <div class="why-point-content"><h4>We build and consult — not one or the other</h4><p>Most AI consultants advise. Most developers build. We do both — so your strategy is grounded in what's actually possible to ship.</p></div>
           </div>
           <div class="why-point reveal d1">
             <div class="why-point-line"><div class="why-dot"></div><div class="why-connector"></div></div>
@@ -675,47 +623,42 @@
           </div>
           <div class="why-point reveal d2">
             <div class="why-point-line"><div class="why-dot"></div><div class="why-connector"></div></div>
-            <div class="why-point-content"><h4>Fast ROI, not long engagements</h4><p>We deliver working tools quickly. Every month of engagement produces something your team can use that same week.</p></div>
+            <div class="why-point-content"><h4>Fast ROI, not long engagements</h4><p>We deliver working tools quickly. Every month produces something your team can use that same week.</p></div>
           </div>
           <div class="why-point reveal d3">
             <div class="why-point-line"><div class="why-dot"></div><div class="why-connector"></div></div>
-            <div class="why-point-content"><h4>GDPR and data security by default</h4><p>Sensitive beneficiary data handled with proper security architecture, role-based access, and full audit trails from day one.</p></div>
+            <div class="why-point-content"><h4>GDPR and data security by default</h4><p>Proper security architecture, role-based access, and full audit trails from day one — not as an afterthought.</p></div>
           </div>
         </div>
       </div>
 
       <div class="reveal d1">
-        <span class="label" style="margin-bottom:1rem; display:block;">Time reclaimed</span>
+        <span class="label" style="margin-bottom:1rem;display:block;">Time reclaimed with AI</span>
         <div class="before-after">
-
           <div class="ba-card">
-            <div class="ba-task-label">Preparing a sponsor report</div>
+            <div class="ba-task-label">Preparing a stakeholder report</div>
             <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">½ day</div></div>
             <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">5 min</div></div>
           </div>
-
           <div class="ba-card">
-            <div class="ba-task-label">Finding a beneficiary's full history</div>
+            <div class="ba-task-label">Finding a contact's full history</div>
             <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Folder search</div></div>
             <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">1 click</div></div>
           </div>
-
           <div class="ba-card">
             <div class="ba-task-label">Programme performance overview</div>
             <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Manual Excel</div></div>
             <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">Always live</div></div>
           </div>
-
           <div class="ba-card">
-            <div class="ba-task-label">Identifying a student at risk</div>
-            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">Too late</div></div>
+            <div class="ba-task-label">Drafting a grant application</div>
+            <div class="ba-side b"><div class="ba-side-label">Before</div><div class="ba-side-value">2–3 days</div></div>
             <div class="ba-arrow-col"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">AI flags early</div></div>
+            <div class="ba-side a"><div class="ba-side-label">After AI</div><div class="ba-side-value">Half a day</div></div>
           </div>
-
         </div>
       </div>
     </div>
@@ -727,7 +670,7 @@
   <div class="inner" style="position:relative;z-index:2;">
     <span class="label reveal" style="display:flex;justify-content:center;">Get Started</span>
     <h2 class="light reveal">Ready to give your team<br>their time <em>back</em>?</h2>
-    <p class="body-text light reveal" style="margin:0 auto 3rem;">Whether you want a discovery call, a training workshop, or a full platform build, the conversation starts with a simple email. No sales process required.</p>
+    <p class="body-text light reveal" style="margin:0 auto 3rem;">Whether you want a quick training session, a workflow audit, or a full product build — the conversation starts with a free discovery call. No sales process, no commitment.</p>
     <div class="reveal">
       <button onclick="openModal()" style="background:none;border:none;cursor:pointer;padding:0;">
         <span class="cta-email">✉ contact@mygalago.com</span>
@@ -748,7 +691,6 @@
 
     <div class="modal-form" id="modal-form">
 
-      <!-- Step 1: offer picker (shown when openModal() called with no arg) -->
       <div id="step-pick">
         <div class="modal-eyebrow">Get Started</div>
         <div class="modal-title">What brings you here?</div>
@@ -758,9 +700,12 @@
             <div style="font-family:var(--font-d);font-size:0.92rem;font-weight:700;color:var(--ink);margin-bottom:0.2rem;">AI Optimization</div>
             <div style="font-size:0.8rem;color:var(--ink3);">I want to use AI to improve my team's existing workflows</div>
           </button>
-          <button onclick="pickOffer('ngos')" style="background:var(--forest);border:1.5px solid var(--emerald);border-radius:12px;padding:1rem 1.2rem;text-align:left;cursor:pointer;transition:border-color 0.2s,background 0.2s;" onmouseover="this.style.background='#1D3828'" onmouseout="this.style.background='var(--forest)'">
-            <div style="font-family:var(--font-d);font-size:0.92rem;font-weight:700;color:var(--cream);margin-bottom:0.2rem;">AI for NGOs <span style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:var(--emerald);color:var(--forest);padding:0.15rem 0.55rem;border-radius:100px;margin-left:6px;">Recommended</span></div>
-            <div style="font-size:0.8rem;color:rgba(200,217,200,0.6);">I want a dedicated platform for my foundation</div>
+          <button onclick="pickOffer('build')" style="background:var(--forest);border:1.5px solid var(--emerald);border-radius:12px;padding:1rem 1.2rem;text-align:left;cursor:pointer;transition:border-color 0.2s,background 0.2s;" onmouseover="this.style.background='#1D3828'" onmouseout="this.style.background='var(--forest)'">
+            <div style="font-family:var(--font-d);font-size:0.92rem;font-weight:700;color:var(--cream);margin-bottom:0.2rem;">AI Product Build <span style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:var(--emerald);color:var(--forest);padding:0.15rem 0.55rem;border-radius:100px;margin-left:6px;">Custom</span></div>
+            <div style="font-size:0.8rem;color:rgba(200,217,200,0.6);">I want a dedicated AI platform built for my organisation</div>
+          </button>
+          <button onclick="pickOffer('pamoja')" style="background:none;border:1.5px solid var(--cream3);border-radius:12px;padding:0.85rem 1.2rem;text-align:left;cursor:pointer;" onmouseover="this.style.borderColor='var(--ink3)'" onmouseout="this.style.borderColor='var(--cream3)'">
+            <div style="font-family:var(--font-d);font-size:0.88rem;font-weight:600;color:var(--ink2);">I run a foundation — tell me more about Pamoja</div>
           </button>
           <button onclick="pickOffer('discovery')" style="background:none;border:1.5px solid var(--cream3);border-radius:12px;padding:0.85rem 1.2rem;text-align:left;cursor:pointer;" onmouseover="this.style.borderColor='var(--ink3)'" onmouseout="this.style.borderColor='var(--cream3)'">
             <div style="font-family:var(--font-d);font-size:0.88rem;font-weight:600;color:var(--ink2);">Not sure yet — just a discovery call</div>
@@ -768,7 +713,6 @@
         </div>
       </div>
 
-      <!-- Step 2: form fields (hidden until offer picked) -->
       <div id="step-form" style="display:none;">
         <button onclick="backToPick()" style="background:none;border:none;cursor:pointer;font-family:var(--font-d);font-size:0.78rem;color:var(--ink3);margin-bottom:1rem;padding:0;display:flex;align-items:center;gap:4px;">← Back</button>
         <div class="modal-eyebrow" id="form-eyebrow">Let's Talk</div>
@@ -783,15 +727,14 @@
             </div>
             <div class="form-field">
               <label for="f-org">Organisation</label>
-              <input type="text" id="f-org" name="organisation" placeholder="My Foundation" />
+              <input type="text" id="f-org" name="organisation" placeholder="My Organisation" />
             </div>
           </div>
           <div class="form-field">
             <label for="f-email">Email address</label>
-            <input type="email" id="f-email" name="email" placeholder="sophie@myfoundation.org" required />
+            <input type="email" id="f-email" name="email" placeholder="sophie@myorg.com" required />
           </div>
 
-          <!-- Optimization-specific questions -->
           <div id="q-optimization" style="display:none;flex-direction:column;gap:0.9rem;">
             <div class="form-field">
               <label for="f-team-size">Team size</label>
@@ -804,14 +747,20 @@
             </div>
             <div class="form-field">
               <label for="f-tasks">Which tasks take the most time?</label>
-              <textarea id="f-tasks" name="tasks" placeholder="Donor reporting, grant writing, managing beneficiary data..." style="min-height:70px;"></textarea>
+              <textarea id="f-tasks" name="tasks" placeholder="Reporting, grant writing, managing data..." style="min-height:70px;"></textarea>
             </div>
           </div>
 
-          <!-- NGOs-specific questions -->
-          <div id="q-ngos" style="display:none;flex-direction:column;gap:0.9rem;">
+          <div id="q-build" style="display:none;flex-direction:column;gap:0.9rem;">
             <div class="form-field">
-              <label for="f-beneficiaries">How many beneficiaries do you manage?</label>
+              <label for="f-problem">What problem would you like us to solve?</label>
+              <textarea id="f-problem" name="problem" placeholder="Tell us about the situation and the outcome you're looking for..." style="min-height:90px;"></textarea>
+            </div>
+          </div>
+
+          <div id="q-pamoja" style="display:none;flex-direction:column;gap:0.9rem;">
+            <div class="form-field">
+              <label for="f-beneficiaries">How many students or beneficiaries do you manage?</label>
               <select id="f-beneficiaries" name="beneficiaries">
                 <option value="">Select</option>
                 <option value="<50">Less than 50</option>
@@ -820,16 +769,15 @@
               </select>
             </div>
             <div class="form-field">
-              <label for="f-current">How do you manage student/beneficiary data today?</label>
+              <label for="f-current">How do you manage student data today?</label>
               <textarea id="f-current" name="current_tools" placeholder="Spreadsheets, paper files, a CRM..." style="min-height:70px;"></textarea>
             </div>
           </div>
 
-          <!-- Discovery: just a message -->
           <div id="q-discovery" style="display:none;">
             <div class="form-field">
               <label for="f-message">Anything you'd like to share?</label>
-              <textarea id="f-message" name="message" placeholder="Tell us a bit about your foundation and what you're looking for..."></textarea>
+              <textarea id="f-message" name="message" placeholder="Tell us a bit about your organisation and what you're looking for..."></textarea>
             </div>
           </div>
 
@@ -871,8 +819,9 @@
     <span class="footer-logo-name">Galago</span>
   </div>
   <div style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap;">
-    <a href="#problem">Services</a>
-    <a href="#case">Case Study</a>
+    <a href="#services">Services</a>
+    <a href="#pamoja">Our Work</a>
+    <a href="https://pamoja.ai" target="_blank" rel="noopener">pamoja.ai</a>
     <a href="mailto:contact@mygalago.com">contact@mygalago.com</a>
   </div>
   <span>© 2026 Galago · mygalago.com</span>
@@ -898,41 +847,51 @@
     optimization: {
       eyebrow: 'AI Optimization',
       title: 'Tell us about your workflows',
-      sub: 'We will audit your current processes and find where AI can save the most time.',
+      sub: 'We\'ll come prepared to your discovery call having thought about your specific situation.',
+      qId: 'q-optimization'
     },
-    ngos: {
-      eyebrow: 'AI for NGOs',
+    build: {
+      eyebrow: 'AI Product Build',
+      title: 'Tell us about the problem',
+      sub: 'The more context you give, the more useful our first call will be.',
+      qId: 'q-build'
+    },
+    pamoja: {
+      eyebrow: 'Pamoja for Foundations',
       title: 'Tell us about your foundation',
-      sub: 'We will set up a demo of the platform configured for your context.',
+      sub: 'We\'ll walk you through what Pamoja can do for your specific situation.',
+      qId: 'q-pamoja'
     },
     discovery: {
       eyebrow: 'Discovery Call',
-      title: 'Let\'s get to know each other',
-      sub: 'No agenda. Just a conversation about where you are and where you want to go.',
-    },
+      title: 'Let\'s talk',
+      sub: 'No agenda, no pressure. Just a conversation about what you\'re trying to do.',
+      qId: 'q-discovery'
+    }
   };
 
   function openModal(offer) {
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-    if (offer) {
-      pickOffer(offer);
-    } else {
+    if (offer) pickOffer(offer);
+    else {
       document.getElementById('step-pick').style.display = 'block';
       document.getElementById('step-form').style.display = 'none';
     }
-    document.getElementById('modal-form').classList.remove('hidden');
-    document.getElementById('modal-success').classList.remove('visible');
   }
 
   function closeModal() {
     overlay.classList.remove('open');
     document.body.style.overflow = '';
-  }
-
-  function backToPick() {
-    document.getElementById('step-pick').style.display = 'block';
-    document.getElementById('step-form').style.display = 'none';
+    setTimeout(() => {
+      document.getElementById('step-pick').style.display = 'block';
+      document.getElementById('step-form').style.display = 'none';
+      document.getElementById('modal-form').classList.remove('hidden');
+      document.getElementById('modal-success').classList.remove('visible');
+      document.getElementById('f-name').value = '';
+      document.getElementById('f-email').value = '';
+      document.getElementById('f-org').value = '';
+    }, 300);
   }
 
   function pickOffer(offer) {
@@ -943,67 +902,58 @@
     document.getElementById('form-eyebrow').textContent = cfg.eyebrow;
     document.getElementById('form-title').textContent = cfg.title;
     document.getElementById('form-sub').textContent = cfg.sub;
-
-    // Show/hide contextual questions
-    ['optimization','ngos','discovery'].forEach(o => {
-      const el = document.getElementById('q-' + o);
-      if (el) el.style.display = o === offer ? 'flex' : 'none';
+    ['q-optimization','q-build','q-pamoja','q-discovery'].forEach(id => {
+      const el = document.getElementById(id);
+      el.style.display = (id === cfg.qId) ? 'flex' : 'none';
     });
-    setTimeout(() => document.getElementById('f-name').focus(), 100);
+  }
+
+  function backToPick() {
+    document.getElementById('step-pick').style.display = 'block';
+    document.getElementById('step-form').style.display = 'none';
   }
 
   document.getElementById('modal-close').addEventListener('click', closeModal);
   overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  // ── Form submission ──
+  // ── Form submit ──
   document.getElementById('btn-submit').addEventListener('click', async () => {
     const name  = document.getElementById('f-name').value.trim();
     const email = document.getElementById('f-email').value.trim();
-    const org   = document.getElementById('f-org').value.trim();
-
-    if (!name || !email) {
-      document.getElementById('f-name').style.borderColor = name ? '' : 'var(--emerald)';
-      document.getElementById('f-email').style.borderColor = email ? '' : 'var(--emerald)';
-      return;
-    }
-
-    // Gather contextual fields
-    let extra = '';
-    if (selectedOffer === 'optimization') {
-      const teamSize = document.getElementById('f-team-size').value;
-      const tasks    = document.getElementById('f-tasks').value.trim();
-      extra = `Team size: ${teamSize}\nTime-consuming tasks: ${tasks}`;
-    } else if (selectedOffer === 'ngos') {
-      const beneficiaries = document.getElementById('f-beneficiaries').value;
-      const current       = document.getElementById('f-current').value.trim();
-      extra = `Beneficiaries: ${beneficiaries}\nCurrent tools: ${current}`;
-    } else {
-      const msg = document.getElementById('f-message').value.trim();
-      extra = msg;
-    }
+    if (!name || !email) { alert('Please enter your name and email.'); return; }
 
     const btn = document.getElementById('btn-submit');
     const lbl = document.getElementById('btn-label');
     btn.disabled = true;
-    lbl.textContent = 'Sending...';
+    lbl.textContent = 'Sending…';
+
+    const payload = {
+      offer: selectedOffer,
+      name,
+      email,
+      organisation: document.getElementById('f-org').value.trim(),
+      team_size:    document.getElementById('f-team-size')?.value || '',
+      tasks:        document.getElementById('f-tasks')?.value || '',
+      problem:      document.getElementById('f-problem')?.value || '',
+      beneficiaries:document.getElementById('f-beneficiaries')?.value || '',
+      current_tools:document.getElementById('f-current')?.value || '',
+      message:      document.getElementById('f-message')?.value || ''
+    };
 
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, organisation: org, service: selectedOffer, message: extra })
+        body: JSON.stringify(payload)
       });
-      if (res.ok) {
-        document.getElementById('modal-form').classList.add('hidden');
-        document.getElementById('modal-success').classList.add('visible');
-      } else { throw new Error(); }
+      if (!res.ok) throw new Error('Server error');
+      document.getElementById('modal-form').classList.add('hidden');
+      document.getElementById('modal-success').classList.add('visible');
     } catch {
-      window.location.href = `mailto:contact@mygalago.com?subject=Contact: ${encodeURIComponent(name)}&body=${encodeURIComponent(`Offer: ${selectedOffer}\nOrg: ${org}\n\n${extra}`)}`;
-      closeModal();
-    } finally {
-      btn.disabled = false;
       lbl.textContent = 'Send message';
+      btn.disabled = false;
+      alert('Something went wrong. Please email us directly at contact@mygalago.com');
     }
   });
 </script>
